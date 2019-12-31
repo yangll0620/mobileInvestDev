@@ -1,0 +1,4 @@
+#Tue Dec 31 16:05:08 CST 2019
+base.0=C\:\\Users\\nmrc3\\Desktop\\WebFetch\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

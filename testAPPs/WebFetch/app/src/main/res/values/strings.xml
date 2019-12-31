@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WebFetch</string>
+    <string name="search_hint">Search Stocks</string>
+    <string name="app_label">App Label</string>
+</resources>

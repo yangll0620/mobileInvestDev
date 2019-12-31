@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SmartInvest</string>
+    <string name="empty_list_text">No Founds Found</string>
+    <string name="add_fund">Add Fund</string>
+</resources>
