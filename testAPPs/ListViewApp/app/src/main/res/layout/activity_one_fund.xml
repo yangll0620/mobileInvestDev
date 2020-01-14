@@ -5,19 +5,11 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvString"
+        android:id="@+id/onefund_tvString"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose your most favorite."
+        android:text="One Fund Details"
         android:background="#b68840"
         android:padding="10dp" />
 
-    <ListView
-        android:id="@+id/simpleListView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/tvString"
-        android:divider="@color/material_blue_grey_800"
-        android:dividerHeight="1dp" />
 </LinearLayout>
