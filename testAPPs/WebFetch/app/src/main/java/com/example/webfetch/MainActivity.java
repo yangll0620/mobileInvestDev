@@ -18,19 +18,28 @@ import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONArray;
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final String apiKey = "ICPJTYNNQ4EO66TT";
     private static final String prefixURL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY";
-    private static final String symbol = "MSFT";
+    private static final String symbol = "BABA";
     private static final String interval = "1min";
     private static final int fetchFreq = 60;
 
@@ -38,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
     private static final int RSS_FETCHPRICE_REQUEST_CODE = 0;
 
 
-    private TextView tvTime;
-    private TextView tvPrice;
+    private TextView tv_time, tv_price;
     java.util.Date noteTS;
 
     private volatile boolean stopThread = false;
 
     float closeprice;
     String string_PriceTime;
+    ArrayList<String> searchedFundNameList;
 
 
     @Override
@@ -54,32 +63,52 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        tvTime =(TextView) findViewById(R.id.tvTime);
-        tvPrice = (TextView) findViewById(R.id.tvPrice);
-        tvPrice.setSingleLine(false);
+        tv_time =(TextView) findViewById(R.id.tv_time);
+        tv_price = (TextView) findViewById(R.id.tv_price);
+        tv_price.setSingleLine(false);
     }
 
 
 
 
-    public void startThread(View view){
+    public void onClick_BtnStartThread(View view){
 
         stopThread = false;
-        tvPrice.setText("");
-        ExampleRunnable runnable = new ExampleRunnable(300);
+        tv_price.setText("Fetching the price of Fund " + symbol);
+        FetchPriceRunnable runnable = new FetchPriceRunnable(300);
         new Thread(runnable).start();
 
     }
 
-    public void stopThread(View view){
+    public void onClick_BtnStopThread(View view){
         stopThread = true;
-        tvTime.setText("Stopped");
+        tv_price.append("\n" + "Stopped Fetching");
     }
 
-    class ExampleRunnable implements Runnable{
+    public void onClick_BtnTest(View view) throws InterruptedException {
+    }
+
+
+    @Override
+    public boolean onQueryTextSubmit(String query)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText)
+    {
+        //searchedfunds_adapter.filter(text);
+
+        return true;
+    }
+
+
+
+    class FetchPriceRunnable implements Runnable{
         int seconds;
 
-        ExampleRunnable(int seconds){
+        FetchPriceRunnable(int seconds){
             this.seconds = seconds;
         }
 
@@ -91,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
             long tStart = System.currentTimeMillis();
             double elapsedSeconds;
+
 
             for(int i = 0; i< seconds; i++)
             {
@@ -104,11 +134,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // update TextView tvTime
                 noteTS = Calendar.getInstance().getTime();
-                tvTime.post(new Runnable() {
+                tv_time.post(new Runnable() {
                     @Override
                     public void run() {
 
-                        tvTime.setText(DateFormat.format(timeFormat, noteTS));
+                        tv_time.setText(DateFormat.format(timeFormat, noteTS));
                     }
                 });
 
@@ -125,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
                         closeprice = fetchCurrentPrice.closeprice;
                         string_PriceTime = fetchCurrentPrice.string_PriceTime;
 
-                        tvPrice.post(new Runnable() {
+                        tv_price.post(new Runnable() {
                             @Override
                             public void run() {
-                                    tvPrice.append("\n" + DateFormat.format(timeFormat, noteTS)  + ", close price : " + String.valueOf(closeprice) + " at " + string_PriceTime);
+                                    tv_price.append("\n" + DateFormat.format(timeFormat, noteTS)  + ", close price : " + String.valueOf(closeprice) + " at " + string_PriceTime);
                             }
                         });
                     }catch(Exception e)
@@ -147,6 +177,13 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+            tv_price.post(new Runnable() {
+                @Override
+                public void run() {
+                    tv_price.append("\n" + "Fininished Fetching Prices");
+                }
+            });
+
         }
     }
 }

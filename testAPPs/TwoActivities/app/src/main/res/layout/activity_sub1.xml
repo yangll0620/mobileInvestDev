@@ -15,5 +15,5 @@
         android:id="@+id/sub1_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Back" />
 </LinearLayout>

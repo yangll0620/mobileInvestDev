@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <SearchView
+        android:id="@+id/main_search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false">
+
+        <requestFocus />
+    </SearchView>
+
+    <Button
+        android:id="@+id/main_btn_startIntent"
+        android:layout_below="@+id/main_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="START Intent Search"/>
+
+    <Button
+        android:id="@+id/main_btn_Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/main_btn_startIntent"
+        android:layout_below="@+id/main_search"
+        android:text="Test"/>
+
+    <TextView
+        android:id="@+id/main_tv_text"
+        android:layout_below="@+id/main_btn_startIntent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:text="TextView" />
+
+
+
+
+    <ListView
+        android:id="@+id/main_lv_searchedfundlist"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/main_tv_text" />
+
+
+
+</RelativeLayout>

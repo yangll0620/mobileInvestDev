@@ -4,19 +4,47 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <SearchView
+        android:id="@+id/main_sv_searchfund"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false">
+
+        <requestFocus />
+    </SearchView>
 
     <ListView
-        android:id="@+id/fundlist"
+        android:id="@+id/main_lv_searchedfundlist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_sv_searchfund"
+        android:choiceMode="singleChoice"
+        android:listSelector="#666666"
+        >
+
+    </ListView>
+
+    <ListView
+        android:id="@+id/main_lv_savedfundlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/main_lv_searchedfundlist"
         android:dividerHeight="1dp"
         android:padding="1dp" />
-    <TextView
-        android:id="@+id/emptylist"
+
+    <Button
+        android:id="@+id/main_btn_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/empty_list_text"
-        />
+        android:text="Test"
+        android:layout_below="@+id/main_lv_savedfundlist"/>
+
+    <TextView
+        android:id="@+id/main_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_btn_test"/>
+
+
 
 </RelativeLayout>

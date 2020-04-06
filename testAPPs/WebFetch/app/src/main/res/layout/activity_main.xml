@@ -5,15 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
-        android:id="@+id/tvTime"
+        android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:text="Time" />
 
 
     <TextView
-        android:id="@+id/tvPrice"
+        android:id="@+id/tv_price"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@android:color/holo_green_light"
@@ -22,18 +23,25 @@
         android:text="price" />
 
     <Button
-        android:id="@+id/StartThread"
+        android:id="@+id/BtnStartThread"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="startThread"
-        android:text="Start" />
+        android:onClick="onClick_BtnStartThread"
+        android:text="Start Getting Price" />
 
     <Button
-        android:id="@+id/StopThread"
+        android:id="@+id/BtnStopThread"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="stopThread"
-        android:text="Stop" />
+        android:onClick="onClick_BtnStopThread"
+        android:text="Stop Getting Price" />
+
+    <Button
+        android:id="@+id/BtnTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick_BtnTest"
+        android:text="Test" />
 
 
 </LinearLayout>

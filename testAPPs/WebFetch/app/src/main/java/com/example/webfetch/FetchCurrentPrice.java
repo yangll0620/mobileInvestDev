@@ -87,10 +87,6 @@ public class FetchCurrentPrice {
             e.printStackTrace();
             closeprice = -1;
             openprice = -1;
-
         }
     }
-
-
-
 }

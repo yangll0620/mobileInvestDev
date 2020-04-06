@@ -645,13 +645,14 @@ drawable notify_panel_notification_icon_bg
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 id ALT
+id BtnStartThread
+id BtnStopThread
+id BtnTest
 id CTRL
 id FUNCTION
 id META
 id SHIFT
 id SYM
-id StartThread
-id StopThread
 id action_bar
 id action_bar_activity_content
 id action_bar_container
@@ -787,8 +788,8 @@ id titleDividerNoCustom
 id title_template
 id top
 id topPanel
-id tvPrice
-id tvTime
+id tv_price
+id tv_time
 id uniform
 id up
 id useLogo
