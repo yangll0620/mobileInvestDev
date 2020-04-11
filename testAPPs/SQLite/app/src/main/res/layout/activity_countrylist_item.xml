@@ -37,6 +37,6 @@
         android:maxLines="2"
         android:padding="3dp"
         android:visibility="visible"/>
-    
+
 
 </RelativeLayout>

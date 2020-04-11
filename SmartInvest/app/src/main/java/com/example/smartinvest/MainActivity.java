@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,16 +28,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     TextView tv_text;
 
     /** SQL Database Related Variables **/
-    DbHandler dbHandler;
+    DBManager dbManager;
+    private SimpleCursorAdapter savedfundCursorAdapter;
+    String[] from_savedFundDB = new String[]{DatabaseHelper.FUNDSYMBOL, DatabaseHelper.FUNDNAME};
+    int[] to_savedFundItem = new int[] {R.id.savedfunditem_symbol, R.id.savedfunditem_name};
 
 
-
-    /** Save Fund Related Variables **/
-    // Customized savedfund adapter usage, arraylist and listView
-    SavedFundListAdapter savedfunds_adapter;
-    ArrayList<Fund> savedfunds_arrayList;
-    ListView savedfunds_listview;
-    Fund tobeSavedFund = null;
+    /** Save Fund List Related Variables **/
+    ListView savedFundList_lv;
 
 
 
@@ -62,18 +62,19 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_main);
 
 
-        btn_test = (Button) findViewById(R.id.main_btn_test);
-        tv_text = (TextView) findViewById(R.id.main_text);
-        btn_test.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                SQLiteDatabase db = dbHandler.getReadableDatabase();
-                tv_text.setText("read Database");
-            }
-        });
-
         /** SQLite databse**/
-        dbHandler = new DbHandler(this);
-        dbHandler.insertFund(new Fund("MSFT", "Microsoft"));
+        dbManager = new DBManager(this);
+        dbManager.open();
+        Cursor cursor = dbManager.fetch();
+        savedfundCursorAdapter = new SimpleCursorAdapter(this, R.layout.activity_savedfund_listview_item, cursor, from_savedFundDB, to_savedFundItem, 0);
+        savedfundCursorAdapter.notifyDataSetChanged();
+
+
+        /** Saved Fund Listview**/
+        savedFundList_lv = (ListView) findViewById(R.id.main_lv_savedfundlist);
+        savedFundList_lv.setEmptyView(findViewById(R.id.main_tv_empty));
+        savedFundList_lv.setAdapter(savedfundCursorAdapter);
+
 
 
         /** Search Fund Section **/
@@ -88,24 +89,20 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         searchedfunds_listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tobeSavedFund = (Fund) parent.getItemAtPosition(position);
             }
         });
 
 
-        /** Saved Fund Section **/
-        // Arraylist, Listview and Adapter Setup
-        savedfunds_arrayList = new ArrayList<Fund>();
-        savedfunds_adapter = new SavedFundListAdapter(this, savedfunds_arrayList);
-        savedfunds_listview = (ListView) findViewById(R.id.main_lv_savedfundlist);
-        savedfunds_listview.setAdapter(savedfunds_adapter);
-        savedfunds_listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+        /** Test Button **/
+        btn_test = (Button) findViewById(R.id.main_btn_test);
+        tv_text = (TextView) findViewById(R.id.main_text);
+        btn_test.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                boolean existFund = dbManager.checkRecordExist("BA");
+                tv_text.setText(String.valueOf(existFund));
             }
         });
-
     }
 
     @Override
@@ -119,14 +116,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         int id = item.getItemId();
         if (id == R.id.menu_addfund) {
-
-            if(tobeSavedFund != null)
-            {
-                savedfunds_arrayList.add(tobeSavedFund);
-                savedfunds_adapter.notifyDataSetChanged();
-            }
-
-
+            Intent intent_addrecord = new Intent(this, AddFundActivity.class);
+            startActivity(intent_addrecord);
         }
         return super.onOptionsItemSelected(item);
     }

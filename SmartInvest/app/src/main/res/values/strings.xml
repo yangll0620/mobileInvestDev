@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">SmartInvest</string>
-    <string name="empty_list_text">No Fund Found</string>
+    <string name="empty_savedfunds">No Fund Found</string>
     <string name="add_fund">Add Fund</string>
+    <string name="enter_fundname">Add Fund Name</string>
+    <string name="enter_fundsymbol">Add Fund Symbol</string>
+
 </resources>

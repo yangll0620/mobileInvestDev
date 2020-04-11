@@ -49,8 +49,8 @@ public class SavedFundListAdapter extends BaseAdapter {
 
             // Locate the TextViews in listview_item.xml
             vholder = new ViewHolder();
-            vholder.tv_savedfund_symbol = (TextView) view.findViewById(R.id.savedfund_symbol);
-            vholder.tv_savedfund_name = (TextView) view.findViewById(R.id.savedfund_name);
+            vholder.tv_savedfund_symbol = (TextView) view.findViewById(R.id.savedfunditem_symbol);
+            vholder.tv_savedfund_name = (TextView) view.findViewById(R.id.savedfunditem_name);
             view.setTag(vholder);
         } else {
             vholder = (ViewHolder) view.getTag();

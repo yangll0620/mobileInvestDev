@@ -6,14 +6,22 @@
 
 
     <TextView
-        android:id="@+id/savedfund_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/savedfunditem_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:padding="3dp"
+        android:textSize="17dp"
+        android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/savedfund_symbol"
-        android:layout_width="wrap_content"
+        android:id="@+id/savedfunditem_symbol"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/searchedfund_name"/>
+        android:layout_below="@+id/savedfunditem_name"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:padding="3dp"
+        android:visibility="visible"/>
 
 </RelativeLayout>
