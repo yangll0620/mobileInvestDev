@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SQLite</string>
+    <string name="enter_subject">Enter Country</string>
+    <string name="enter_desc">Enter Description</string>
+    <string name="add_record">Add Record</string>
+    <string name="empty_country">No Country</string>
+</resources>
