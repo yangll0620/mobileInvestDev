@@ -69,17 +69,6 @@ public class DBManager {
 
         long rowId = database.insert(DatabaseHelper.TABLENAME_TRANS, null, contentValues);
         return rowId;
-
-/*        Cursor c = database.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
-
-        long count = DatabaseUtils.queryNumEntries(database, DatabaseHelper.TABLENAME_TRANS);
-
-        if (c.moveToFirst()) {
-            while ( !c.isAfterLast() ) {
-                String[] strcols = c.getColumnNames();
-                c.moveToNext();
-            }
-        }*/
     }
 
     public Cursor fetch(){

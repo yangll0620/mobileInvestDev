@@ -31,7 +31,6 @@ public class OneFundDetailActivity extends AppCompatActivity {
         fundSymbol = intent_main.getStringExtra(EXTRA_FUNDSYMBOL);
         fundName = intent_main.getStringExtra(EXTRA_FUNDNAME);
 
-
         setTitle(fundName);
 
 
@@ -39,11 +38,18 @@ public class OneFundDetailActivity extends AppCompatActivity {
         btnAddTrans = (Button) findViewById(R.id.onefund_btn_addtran);
         btnAddTrans.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Transaction trans = new Transaction(fundSymbol, fundName, new Date(), new Float(137.25), 2, new Float(220));
+                Intent intent_addTrans = new Intent(getApplicationContext(), AddTransActivity.class);
 
-                // Insert new transaction recornd into table transaction
-                long rowId = dbManager.insert(trans);
+                intent_addTrans.putExtra(EXTRA_FUNDSYMBOL, fundSymbol);
+                intent_addTrans.putExtra(EXTRA_FUNDNAME,fundName);
+
+
+                startActivity(intent_addTrans);
             }
         });
     }
+
+
+
+
 }
