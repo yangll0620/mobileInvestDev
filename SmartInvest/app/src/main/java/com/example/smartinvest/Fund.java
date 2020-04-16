@@ -1,28 +1,82 @@
 package com.example.smartinvest;
 
-public class Fund {
-    private String fund_Symobol;
-    private String fund_Name;
 
-    public Fund(String fund_Symobol)
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Fund implements Parcelable {
+    private String fundSymbol;
+    private String fundName;
+
+    public Fund()
     {
-        this.fund_Symobol = fund_Symobol;
+        this.fundSymbol = "";
+        this.fundName = "";
     }
 
-    public Fund(String fund_Symobol, String fund_Name)
+    public Fund(String fundSymbol)
     {
-        this.fund_Symobol = fund_Symobol;
-        this.fund_Name = fund_Name;
+
+        this.fundSymbol = fundSymbol;
+        this.fundName = "";
     }
+
+    public Fund(String fundSymbol, String fundName)
+    {
+        this.fundSymbol = fundSymbol;
+        this.fundName = fundName;
+    }
+
+
 
     public String getFundSymbol()
     {
-        return this.fund_Symobol;
+
+        return this.fundSymbol;
+    }
+
+    public void setFundSymbol(String fundSymbol)
+    {
+        this.fundSymbol = fundSymbol;
     }
 
     public String getFundName()
     {
-        return this.fund_Name;
+        return this.fundName;
+    }
+
+
+    public void setFundName(String fundName)
+    {
+        this.fundName = fundName;
+    }
+
+
+
+    /** Parcelable Methods **/
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(fundSymbol);
+        out.writeString(fundName);
+    }
+
+    public static final Parcelable.Creator<Fund> CREATOR = new Parcelable.Creator<Fund>() {
+        @Override
+        public Fund createFromParcel(Parcel in) {
+            return new Fund(in);
+        }
+
+        public Fund[] newArray(int size) {
+            return new Fund[size];
+        }
+    };
+
+    private Fund(Parcel in) {
+        setFundSymbol(in.readString());
+        setFundName(in.readString());
     }
 }
 

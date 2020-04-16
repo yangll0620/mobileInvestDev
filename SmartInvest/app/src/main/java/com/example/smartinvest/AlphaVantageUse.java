@@ -30,7 +30,6 @@ public class AlphaVantageUse
     public JSONObject RetrieveOnlineJSON(String alphaVRequestString)
     {// Retrieve JSONObject from online using alphaVRequestString
 
-
         JSONObject RetrievedJSON;
         try {
                 URL url = new URL(alphaVRequestString);
@@ -74,6 +73,20 @@ public class AlphaVantageUse
     }
 
 
+    public int ParsePriceTimeSeriesJSON(JSONObject RetrievedJSON)
+    {// Parse JSON of retrieved time series using TIME_SERIES_DAILY, TIME_SERIES_INTRADAY et.al
+
+        int price = 0;
+        try{
+            JSONArray jObj_Matches = RetrievedJSON.getJSONArray("bestMatches");
+        } catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return price;
+    }
+
+
     public  ArrayList<Fund>  ParseSearchedFundsJSON(JSONObject RetrievedJSON)
     {// Parse JSON of retrieved SYMNOL_SEARCH
 
@@ -81,8 +94,6 @@ public class AlphaVantageUse
         try{
             // get the JSONArray of bestMatches, JSON has one field: "bestMatches"
             JSONArray jObj_Matches = RetrievedJSON.getJSONArray("bestMatches");
-
-
 
 
             // Parse each Fund

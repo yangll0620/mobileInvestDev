@@ -4,24 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
 
     Button btn_test;
@@ -29,14 +25,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     /** SQL Database Related Variables **/
     DBManager dbManager;
-    private SimpleCursorAdapter savedfundCursorAdapter;
-    String[] from_savedFundDB = new String[]{DatabaseHelper.FUNDSYMBOL, DatabaseHelper.FUNDNAME};
-    int[] to_savedFundItem = new int[] {R.id.savedfunditem_symbol, R.id.savedfunditem_name};
 
 
     /** Save Fund List Related Variables **/
     ListView savedFundList_lv;
-
+    ArrayList<Fund> savedFundList_arrayList;
+    SavedFundListAdapter savedFundList_adapter;
 
 
 
@@ -50,7 +44,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     ListView searchedfunds_listview;
 
     // Search View
-    SearchView searchedfund_searchview;
+    SearchView searchedfunds_searchview;
+
+    // selected Fund in Searched Fund Listview
+    Fund searchedfunds_selectedFund;
 
 
 
@@ -65,21 +62,34 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         /** SQLite databse**/
         dbManager = new DBManager(this);
         dbManager.open();
-        Cursor cursor = dbManager.fetch();
-        savedfundCursorAdapter = new SimpleCursorAdapter(this, R.layout.activity_savedfund_listview_item, cursor, from_savedFundDB, to_savedFundItem, 0);
-        savedfundCursorAdapter.notifyDataSetChanged();
 
 
         /** Saved Fund Listview**/
+        // Saved Fund Listveiw Adapter
+        savedFundList_arrayList = dbManager.fetchAll();
+        savedFundList_adapter = new SavedFundListAdapter(this, savedFundList_arrayList);
+
         savedFundList_lv = (ListView) findViewById(R.id.main_lv_savedfundlist);
         savedFundList_lv.setEmptyView(findViewById(R.id.main_tv_empty));
-        savedFundList_lv.setAdapter(savedfundCursorAdapter);
+        savedFundList_lv.setAdapter(savedFundList_adapter);
+        savedFundList_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                Intent intent_funddetail = new Intent(getApplicationContext(), OneFundDetailActivity.class);
+
+                Fund fund = (Fund) parent.getItemAtPosition(position);
+                intent_funddetail.putExtra(OneFundDetailActivity.EXTRA_FUNDSYMBOL, fund.getFundSymbol());
+                intent_funddetail.putExtra(OneFundDetailActivity.EXTRA_FUNDNAME, fund.getFundName());
+
+                startActivity(intent_funddetail);
+            }
+        });
 
 
 
         /** Search Fund Section **/
-        searchedfund_searchview = (SearchView) findViewById(R.id.main_sv_searchfund);
-        searchedfund_searchview.setOnQueryTextListener(this);
+        searchedfunds_searchview = (SearchView) findViewById(R.id.main_sv_searchfund);
+        searchedfunds_searchview.setOnQueryTextListener(this);
 
         // Arraylist, Listview and Adapter Setup
         searchedfunds_arrayList = new ArrayList<Fund>();
@@ -89,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         searchedfunds_listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchedfunds_selectedFund = (Fund) parent.getItemAtPosition(position);
             }
         });
 
@@ -99,8 +110,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         tv_text = (TextView) findViewById(R.id.main_text);
         btn_test.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                boolean existFund = dbManager.checkRecordExist("BA");
-                tv_text.setText(String.valueOf(existFund));
+                Transaction trans = new Transaction("BA", "Boeing", new Date(), new Float(137.25), 2, new Float(220));
+
+                // Insert new transaction recornd into table transaction
+                long rowId = dbManager.insert(trans);
+                tv_text.setText(Long.toString(rowId));
             }
         });
     }
@@ -116,8 +130,22 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         int id = item.getItemId();
         if (id == R.id.menu_addfund) {
-            Intent intent_addrecord = new Intent(this, AddFundActivity.class);
-            startActivity(intent_addrecord);
+            if(!dbManager.checkRecordExist(searchedfunds_selectedFund))
+            {
+                // Insert searchedfunds_selectedFund into table SavedFund
+                dbManager.insert(searchedfunds_selectedFund);
+                ArrayList <Fund> fundlist = dbManager.fetchAll();
+
+                // Update the content of savedFundList_arrayList
+                savedFundList_arrayList.clear();
+                savedFundList_arrayList.addAll(fundlist);
+
+                // Update savedFundList_adapter and savedFundList_lv
+                savedFundList_adapter.notifyDataSetChanged();
+                savedFundList_lv.invalidateViews();
+                savedFundList_lv.refreshDrawableState();
+
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -171,24 +199,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void showSearchedFunds(Intent intent)
     {
-        // Extract the searched_funds symbol and Name
-        String[] searched_fundsSymbol = intent.getStringArrayExtra(SearchFundIntentService.RESULT_EXTRA_FUNDSSYMBOL);
-        String[] searched_fundsName = intent.getStringArrayExtra(SearchFundIntentService.RESULT_EXTRA_FUNDSNAME);
+        // Extract the searched_funds
+        FundListParcelable searchedFundListParce = intent.getParcelableExtra(SearchFundIntentService.RESULT_EXTRA_SEACHEDFUNDs);
 
 
         searchedfunds_arrayList.clear();
-        for (int i = 0; i< searched_fundsSymbol.length; i++)
-        {
-            Fund fund = new Fund(searched_fundsSymbol[i], searched_fundsName[i]);
-            searchedfunds_arrayList.add(fund);
-        }
+        searchedfunds_arrayList.addAll(searchedFundListParce.fundList);
 
         searchedfunds_adapter.notifyDataSetChanged();
         searchedfunds_listview.invalidateViews();
 
+        searchedfunds_selectedFund = null;
     }
 
 
     private void handleInvalidURL(){
     }
+
+
+
 }

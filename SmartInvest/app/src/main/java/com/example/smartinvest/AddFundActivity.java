@@ -40,10 +40,13 @@ public class AddFundActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()){
             case R.id.addfund_btn_addrecord:
 
-                final String fundSymbol = etFundSymbol.getText().toString();
-                final String fundName = etFundName.getText().toString();
+                String fundSymbol = etFundSymbol.getText().toString();
+                String fundName = etFundName.getText().toString();
+                Fund fund = new Fund(fundSymbol, fundName);
 
-                dbManager.insert(fundSymbol, fundName);
+
+                dbManager.insert(fund);
+                dbManager.close();
 
                 Intent intent_main = new Intent(AddFundActivity.this, MainActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

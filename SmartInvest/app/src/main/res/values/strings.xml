@@ -5,4 +5,12 @@
     <string name="enter_fundname">Add Fund Name</string>
     <string name="enter_fundsymbol">Add Fund Symbol</string>
 
+    <string name="onefund_avgcost">Average Cost</string>
+    <string name="onefund_shares">Shares</string>
+    <string name="onefund_totalreturn">Total Return</string>
+    <string name="onefund_annualreturn">Annual Return Rate </string>
+    <string name="onefund_peakannualreturn">Peak Annual Return Rate </string>
+    <string name="onefund_history">Transaction History</string>
+    <string name="onefund_addtran">Add Transactions</string>
+
 </resources>

@@ -14,8 +14,7 @@ public class SearchFundIntentService extends IntentService {
 
 
     public static final String RESULT_EXTRA = "pending_result";
-    public static final String RESULT_EXTRA_FUNDSSYMBOL= "result_searched_funds_symbol";
-    public static final String RESULT_EXTRA_FUNDSNAME= "result_searched_funds_name";
+    public static final String RESULT_EXTRA_SEACHEDFUNDs= "result_searched_funds";
     public static final String EXTRA_SEARCHSTRING = "search_string";
 
 
@@ -42,21 +41,11 @@ public class SearchFundIntentService extends IntentService {
                 ArrayList<Fund> searchedFundList = alphaVUse.ParseSearchedFundsJSON(RetrievedJSON);
 
 
-                int n_fund = searchedFundList.size();
-                String[] seachedFunds_name = new String[n_fund];
-                String[] searchedFunds_symbol = new String[n_fund];
-                for (int i =0; i< n_fund; i++)
-                {
-                    Fund seachedFund = searchedFundList.get(i);
-                    seachedFunds_name[i] = seachedFund.getFundName();
-                    searchedFunds_symbol[i] = seachedFund.getFundSymbol();
-                }
-
+                FundListParcelable searchedFundListParce = new FundListParcelable(searchedFundList);
 
                 // pack result_intent
                 Intent result_intent = new Intent();
-                result_intent.putExtra(RESULT_EXTRA_FUNDSSYMBOL, searchedFunds_symbol);
-                result_intent.putExtra(RESULT_EXTRA_FUNDSNAME, seachedFunds_name);
+                result_intent.putExtra(RESULT_EXTRA_SEACHEDFUNDs, searchedFundListParce);
 
 
                 // send result_intent
