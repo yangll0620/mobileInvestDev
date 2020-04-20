@@ -133,7 +133,7 @@
         android:text="@string/onefund_addtran"/>
 
     <ListView
-        android:id="@+id/onefund_lv_tranhistory"
+        android:id="@+id/onefund_lv_translist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

@@ -70,4 +70,11 @@ public class Transaction {
     {
         this.transAmount = amount;
     }
+
+
+    public boolean completeTrans(){
+        return !(transFundSymbol.isEmpty());
+    }
+
+
 }

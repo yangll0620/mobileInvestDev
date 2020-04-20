@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class OneFundDetailActivity extends AppCompatActivity {
@@ -22,6 +26,12 @@ public class OneFundDetailActivity extends AppCompatActivity {
     String fundSymbol, fundName;
     DBManager dbManager;
 
+
+    /** Onefund Transaction History List Related Variables **/
+    ListView onefundTransList_lv;
+    ArrayList<Transaction> onefundTransList_arrayList;
+    OnefundTransListAdapter onefundTransList_adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +42,11 @@ public class OneFundDetailActivity extends AppCompatActivity {
         fundName = intent_main.getStringExtra(EXTRA_FUNDNAME);
 
         setTitle(fundName);
+
+
+        /** SQLite databse**/
+        dbManager = new DBManager(this);
+        dbManager.open();
 
 
         /** Add Transcation Button **/
@@ -47,6 +62,16 @@ public class OneFundDetailActivity extends AppCompatActivity {
                 startActivity(intent_addTrans);
             }
         });
+
+
+        /**  Onefund Transaction History Section **/
+        // Saved Fund Listveiw Adapter
+        onefundTransList_arrayList = dbManager.fetchAllTrans();
+        onefundTransList_adapter = new OnefundTransListAdapter(this, onefundTransList_arrayList);
+
+        onefundTransList_lv = (ListView) findViewById(R.id.onefund_lv_translist);
+        onefundTransList_lv.setEmptyView(findViewById(R.id.main_tv_empty));
+        onefundTransList_lv.setAdapter(onefundTransList_adapter);
     }
 
 

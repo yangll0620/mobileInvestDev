@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         /** Saved Fund Listview**/
         // Saved Fund Listveiw Adapter
-        savedFundList_arrayList = dbManager.fetchAll();
+        savedFundList_arrayList = dbManager.fetchAllSavedFunds();
         savedFundList_adapter = new SavedFundListAdapter(this, savedFundList_arrayList);
 
         savedFundList_lv = (ListView) findViewById(R.id.main_lv_savedfundlist);
@@ -110,11 +110,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         tv_text = (TextView) findViewById(R.id.main_text);
         btn_test.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Transaction trans = new Transaction("BA", "Boeing", new Date(), new Float(137.25), 2, new Float(220));
-
-                // Insert new transaction recornd into table transaction
-                long rowId = dbManager.insert(trans);
-                tv_text.setText(Long.toString(rowId));
+                ArrayList<Transaction> transList_arrayList = dbManager.fetchAllTrans();
             }
         });
     }
@@ -134,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             {
                 // Insert searchedfunds_selectedFund into table SavedFund
                 dbManager.insert(searchedfunds_selectedFund);
-                ArrayList <Fund> fundlist = dbManager.fetchAll();
+                ArrayList <Fund> fundlist = dbManager.fetchAllSavedFunds();
 
                 // Update the content of savedFundList_arrayList
                 savedFundList_arrayList.clear();

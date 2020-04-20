@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -80,7 +81,7 @@ public class DBManager {
     }
 
 
-    public ArrayList<Fund> fetchAll()
+    public ArrayList<Fund> fetchAllSavedFunds()
     {
         ArrayList<Fund> array_list = new ArrayList<Fund>();
 
@@ -106,6 +107,58 @@ public class DBManager {
             if(!fund.getFundSymbol().isEmpty())
             {
                 array_list.add(fund);
+            }
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return array_list;
+    }
+
+    public ArrayList<Transaction> fetchAllTrans()
+    {
+        ArrayList<Transaction> array_list = new ArrayList<Transaction>();
+
+        Cursor cursor = database.rawQuery("select * from " + DatabaseHelper.TABLENAME_TRANS, null);
+        cursor.moveToFirst();
+        String[] colNames = cursor.getColumnNames();
+        while(cursor.isAfterLast() == false)
+        {
+            // extract each transaction
+            Transaction trans = new Transaction();
+            for(String colName: colNames)
+            {
+                int coli = cursor.getColumnIndex(colName);
+                switch (colName){
+                    case "fundSymbol":
+                        trans.setTransFundSymbol(cursor.getString(coli));
+                        break;
+                    case "fundName":
+                        trans.setTransFundName(cursor.getString(coli));
+                        break;
+                    case "date":
+                        try {
+                            SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
+                            trans.setTransDate(format.parse(cursor.getString(coli)));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "price":
+                        trans.setTransPrice(cursor.getFloat(coli));
+                        break;
+                    case "shares":
+                        trans.setTransShares(cursor.getInt(coli));
+                        break;
+                    case "amount":
+                        trans.setTransAmount(cursor.getFloat(coli));
+                        break;
+                }
+            }
+            if(trans.completeTrans())
+            {
+                array_list.add(trans);
             }
 
             cursor.moveToNext();
