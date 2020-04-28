@@ -2,7 +2,7 @@ package com.example.smartinvest;
 
 import java.util.Date;
 
-public class Transaction {
+public class Transaction implements Comparable<Transaction>{
     private String transFundSymbol;
     private String transFundName;
     private Date transDate;
@@ -74,6 +74,22 @@ public class Transaction {
 
     public boolean completeTrans(){
         return !(transFundSymbol.isEmpty());
+    }
+
+
+
+    @Override
+    public int compareTo(Transaction trans) {
+
+        if (trans.getTransDate().before(this.transDate)){
+            return 1;
+        }
+        else if (trans.getTransDate().after(this.transDate)) {
+            return -1;
+        }
+        else {
+            return 0;
+        }
     }
 
 

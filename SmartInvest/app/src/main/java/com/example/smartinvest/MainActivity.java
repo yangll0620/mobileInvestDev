@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     /** Search Fund Related Variables **/
     private static final int SEARCHFUND_REQUEST_CODE = 0;
-    private static final String ulr_alphavantage = "https://www.alphavantage.co/documentation/";
 
     // Customized searchfund adapter usage, arraylist and listView
     SearchedFundListAdapter searchedfunds_adapter;
@@ -50,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     Fund searchedfunds_selectedFund;
 
 
+
+    /** Update price **/
+    private static final String interval = "1min";
 
 
     /******************** Start Methods ********************/

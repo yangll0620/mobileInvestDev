@@ -2,6 +2,7 @@ package com.example.smartinvest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.Spinner;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.example.smartinvest.SearchFundIntentService.RESULT_EXTRA;
+
 public class AddTransActivity extends AppCompatActivity implements View.OnClickListener{
 
     //CalendarView cv_transdate;
@@ -26,6 +29,9 @@ public class AddTransActivity extends AppCompatActivity implements View.OnClickL
     String fundSymbol, fundName;
 
     DBManager dbManager;
+
+
+    public static final String RESULT_ADDEDTRANS = "addFund_result";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +100,15 @@ public class AddTransActivity extends AppCompatActivity implements View.OnClickL
                 // Insert new transaction record
                 Transaction trans = new Transaction(fundSymbol, fundName, transDate, price, shares, amount);
                 dbManager.insert(trans);
-                break;
 
+
+                // send update trans list code
+                Intent intent = new Intent();
+                intent.putExtra(RESULT_ADDEDTRANS, true);
+                setResult(RESULT_OK, intent);
+
+                finish();
+                break;
         }
     }
 }

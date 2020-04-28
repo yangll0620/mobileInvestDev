@@ -1,6 +1,9 @@
 package com.example.smartinvest;
 
 import android.os.AsyncTask;
+import android.text.format.DateFormat;
+
+import androidx.annotation.StringDef;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,6 +12,8 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,10 +26,24 @@ public class AlphaVantageUse
     private static final String alphaVURL = "https://www.alphavantage.co/";
 
 
+    public static final String inter1min = "1min";
+    public static final String inter5min = "5min";
+    public static final String inter15min = "15min";
+    public static final String inter30min = "30min";
+    public static final String inter60min = "60min";
+
+    public static final float faultPrice = -1;
+
+
+
     public AlphaVantageUse()
     {
 
     }
+
+    @StringDef({inter1min, inter5min, inter15min, inter30min, inter60min})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SerialInterval {}
 
 
     public JSONObject RetrieveOnlineJSON(String alphaVRequestString)
@@ -73,16 +92,31 @@ public class AlphaVantageUse
     }
 
 
-    public int ParsePriceTimeSeriesJSON(JSONObject RetrievedJSON)
+    public float ParsePriceTimeSeriesJSON(JSONObject RetrievedJSON, @SerialInterval String interval)
     {// Parse JSON of retrieved time series using TIME_SERIES_DAILY, TIME_SERIES_INTRADAY et.al
 
-        int price = 0;
+        float price;
+
         try{
-            JSONArray jObj_Matches = RetrievedJSON.getJSONArray("bestMatches");
+            // get the JSONObject of Time Series, JSON has two names: "Meta Data" and "Time Series (5min)"
+            JSONObject jObj_Timeseries = RetrievedJSON.getJSONObject("Time Series" +  " (" + interval + ")");
+
+
+            // Get the latest time (String)
+            String string_PriceTime = jObj_Timeseries.names().getString(0);
+            // Get the JSONObject for the latest time point, as "Time Series": {"2019-12-27 16:00:00": {...}}, {"2019-12-27 15:55:00": {...}}
+            JSONObject jObj_latestTime  = jObj_Timeseries.getJSONObject(string_PriceTime);
+
+
+            // Get the close price of the latest time point
+            price = Float.valueOf(jObj_latestTime.getString("4. close"));
+
         } catch(JSONException e)
         {
             e.printStackTrace();
+            price = faultPrice;
         }
+
         return price;
     }
 
@@ -119,4 +153,56 @@ public class AlphaVantageUse
 
         return searchedFundList;
     }
+
+
+    public class UpdatePriceRunnable implements Runnable {
+        int updateSec;
+        boolean updateTag;
+
+        private @SerialInterval String serialInterval;
+        Fund fund;
+        float price;
+
+        UpdatePriceRunnable(int updateSec, @SerialInterval String serialInterval, Fund fund){
+
+            this.updateSec= updateSec;
+            this.serialInterval = serialInterval;
+        }
+
+        void setFund(Fund fund){
+            this.fund = fund;
+        }
+
+        @Override
+        public void run(){
+
+            updateTag = true;
+            while(updateTag)
+            {/* update Stock price every updateIntervalSec */
+
+                String timeSeriesAlphaVQuery = alphaVURL + "query?function=TIME_SERIES_INTRADAY&symbol=" + fund.getFundSymbol() + "&interval=" + serialInterval + "&apikey=" + apiKey;
+
+                try{
+                    JSONObject retrievedJSON = RetrieveOnlineJSON(timeSeriesAlphaVQuery);
+                    price = ParsePriceTimeSeriesJSON(retrievedJSON, serialInterval);
+                }catch(Exception e)
+                {
+                    e.printStackTrace();
+                    price = faultPrice;
+                }
+
+                // Sleep updateSec seconds
+                try{
+                    Thread.sleep(updateSec * 1000);
+                }
+                catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+
+
 }

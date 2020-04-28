@@ -4,9 +4,18 @@ package com.example.smartinvest;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 public class Fund implements Parcelable {
     private String fundSymbol;
     private String fundName;
+    private float peakARR; // peak annual return rate
+    private float currPrice;
+    private List<Transaction> transList;
+
 
     public Fund()
     {
@@ -40,16 +49,17 @@ public class Fund implements Parcelable {
         this.fundSymbol = fundSymbol;
     }
 
+
     public String getFundName()
     {
         return this.fundName;
     }
 
-
     public void setFundName(String fundName)
     {
         this.fundName = fundName;
     }
+
 
 
 

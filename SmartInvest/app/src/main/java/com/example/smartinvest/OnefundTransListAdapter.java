@@ -63,7 +63,7 @@ public class OnefundTransListAdapter extends BaseAdapter {
         }
 
         // Set the results into TextViews
-        SimpleDateFormat format = new SimpleDateFormat();
+        SimpleDateFormat format = new SimpleDateFormat(OneFundDetailActivity.DATEFORMAT);
         Date transDate = onefundTransList.get(position).getTransDate();
         vholder.tvTransDate.setText(format.format(transDate));
         vholder.tvTransPrice.setText(String.valueOf(onefundTransList.get(position).getTransPrice()));

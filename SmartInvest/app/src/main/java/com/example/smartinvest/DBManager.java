@@ -12,6 +12,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 public class DBManager {
 
@@ -166,6 +168,109 @@ public class DBManager {
 
         cursor.close();
         return array_list;
+    }
+
+    public ArrayList<Transaction> fetchTrans(String fundSymbol)
+    {/* fetch all transactions of fundSymbol */
+
+        ArrayList<Transaction> array_list = new ArrayList<Transaction>();
+
+
+        String table = DatabaseHelper.TABLENAME_TRANS;
+        String whereClause = DatabaseHelper.TRANS_FUNDSYMBOL + " = ?";
+        String[] whereArgs = new String[] {fundSymbol};
+        Cursor cursor = database.query(table, null, whereClause, whereArgs,null, null, null);
+
+
+        cursor.moveToFirst();
+        String[] colNames = cursor.getColumnNames();
+        while(cursor.isAfterLast() == false)
+        {
+            // extract each transaction
+            Transaction trans = new Transaction();
+            for(String colName: colNames)
+            {
+                int coli = cursor.getColumnIndex(colName);
+                switch (colName){
+                    case "fundSymbol":
+                        trans.setTransFundSymbol(cursor.getString(coli));
+                        break;
+                    case "fundName":
+                        trans.setTransFundName(cursor.getString(coli));
+                        break;
+                    case "date":
+                        try {
+                            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                            Date transDate = format.parse(cursor.getString(coli));
+                            trans.setTransDate(transDate);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "price":
+                        trans.setTransPrice(cursor.getFloat(coli));
+                        break;
+                    case "shares":
+                        trans.setTransShares(cursor.getInt(coli));
+                        break;
+                    case "amount":
+                        trans.setTransAmount(cursor.getFloat(coli));
+                        break;
+                }
+            }
+            if(trans.completeTrans())
+            {
+                array_list.add(trans);
+            }
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        Collections.sort(array_list);
+        return array_list;
+    }
+
+    public int getShares(String fundSymbol)
+    {
+
+        String sqlStr = "SELECT SUM(" + DatabaseHelper.TRANS_SHARES + ") FROM " +  DatabaseHelper.TABLENAME_TRANS +
+                " WHERE " + DatabaseHelper.SAVEDFUNDS_FUNDSYMBOL + " =  '" + fundSymbol + "'";
+        Cursor cursor = database.rawQuery(sqlStr, null);
+
+        int shares;
+        if(cursor.moveToFirst())
+            shares = cursor.getInt(0);
+        else
+            shares = -1;
+        cursor.close();
+
+        return shares;
+    }
+
+
+    public float getAvgCost(String fundSymbol)
+    {
+
+        String sqlStr = "SELECT SUM(" + DatabaseHelper.TRANS_SHARES + "), SUM(" + DatabaseHelper.TRANS_AMOUNT +
+                ") FROM " +  DatabaseHelper.TABLENAME_TRANS +
+                " WHERE " + DatabaseHelper.SAVEDFUNDS_FUNDSYMBOL + " =  '" + fundSymbol + "'";
+        Cursor cursor = database.rawQuery(sqlStr, null);
+
+
+        float cost;
+        if(cursor.moveToFirst()) {
+            int shares = cursor.getInt(0);
+            float amount = cursor.getFloat(1);
+            cost = amount / shares;
+        }
+        else{
+            cost = -1;
+        }
+        cursor.close();
+
+        return cost;
     }
 
 
