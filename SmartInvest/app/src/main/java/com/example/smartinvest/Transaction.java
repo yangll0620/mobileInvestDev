@@ -8,6 +8,7 @@ public class Transaction implements Comparable<Transaction>{
     private Date transDate;
     private float transPrice, transAmount;
     private int transShares;
+    private long transId;
 
 
     public Transaction()
@@ -74,6 +75,13 @@ public class Transaction implements Comparable<Transaction>{
 
     public boolean completeTrans(){
         return !(transFundSymbol.isEmpty());
+    }
+
+
+    public void setTransId(long transId) { this.transId = transId; }
+    public long getTransId()
+    {
+        return this.transId;
     }
 
 

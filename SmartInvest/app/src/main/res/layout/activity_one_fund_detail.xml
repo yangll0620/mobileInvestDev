@@ -128,7 +128,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/onefund_tv_labelhistory" />
+        android:layout_below="@+id/onefund_tv_labelhistory"
+        android:listSelector="#666666"
+        android:choiceMode="singleChoice" />
+
+    <Button
+        android:id="@+id/onefund_btn_deltrans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/onefunddetail_tv_totalreturn"
+        android:layout_marginLeft="47dp"
+        android:layout_marginTop="54dp"
+        android:layout_toRightOf="@+id/onefund_tv_labelpeakannualreturn"
+        android:text="@string/onefund_deltran" />
 
 
 

@@ -33,7 +33,6 @@
 
 
 
-
     <TextView
         android:id="@+id/addtrans_tv_transstatelabel"
         android:layout_width="wrap_content"
@@ -42,16 +41,15 @@
         android:text="@string/addtrans_transstate"
         android:textStyle="bold"/>
 
+
     <Spinner
         android:id="@+id/addtrans_spinner_transstate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_below="@id/addtrans_tv_transstatelabel"
+        android:layout_marginTop="10dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown" />
-
-
 
     <TextView
         android:id="@+id/addtrans_tv_transpricelabel"

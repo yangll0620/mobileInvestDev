@@ -192,13 +192,15 @@ public class DBManager {
             {
                 int coli = cursor.getColumnIndex(colName);
                 switch (colName){
-                    case "fundSymbol":
+                    case DatabaseHelper.TRANS_ID:
+                        trans.setTransId(cursor.getLong(coli));
+                    case DatabaseHelper.TRANS_FUNDSYMBOL:
                         trans.setTransFundSymbol(cursor.getString(coli));
                         break;
-                    case "fundName":
+                    case DatabaseHelper.TRANS_FUNDNAME:
                         trans.setTransFundName(cursor.getString(coli));
                         break;
-                    case "date":
+                    case DatabaseHelper.TRANS_DATE:
                         try {
                             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                             Date transDate = format.parse(cursor.getString(coli));
@@ -207,13 +209,13 @@ public class DBManager {
                             e.printStackTrace();
                         }
                         break;
-                    case "price":
+                    case DatabaseHelper.TRANS_PRICE:
                         trans.setTransPrice(cursor.getFloat(coli));
                         break;
-                    case "shares":
+                    case DatabaseHelper.TRANS_SHARES:
                         trans.setTransShares(cursor.getInt(coli));
                         break;
-                    case "amount":
+                    case DatabaseHelper.TRANS_AMOUNT:
                         trans.setTransAmount(cursor.getFloat(coli));
                         break;
                 }
@@ -307,6 +309,11 @@ public class DBManager {
     public void delete(long _id){
         database.delete(DatabaseHelper.TABLENAME_SAVEDFUNDS, DatabaseHelper.SAVEDFUNDS_ID + "=" + _id, null);
     }
+
+    public void deleteTrans(long _id){
+        database.delete(DatabaseHelper.TABLENAME_TRANS, DatabaseHelper.TRANS_ID + "=" + _id, null);
+    }
+
 
     public void deleteALL()
     {

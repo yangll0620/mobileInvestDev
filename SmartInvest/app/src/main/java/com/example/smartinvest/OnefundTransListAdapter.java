@@ -28,6 +28,7 @@ public class OnefundTransListAdapter extends BaseAdapter {
         TextView tvTransPrice;
         TextView tvTransShares;
         TextView tvTransAmount;
+        TextView tvTransId;
     }
 
     @Override
@@ -56,6 +57,7 @@ public class OnefundTransListAdapter extends BaseAdapter {
             vholder.tvTransPrice = (TextView) view.findViewById(R.id.onefund_transitem_tv_price);
             vholder.tvTransShares = (TextView) view.findViewById(R.id.onefund_transitem_tv_shares);
             vholder.tvTransAmount = (TextView) view.findViewById(R.id.onefund_transitem_tv_amount);
+            vholder.tvTransId = (TextView) view.findViewById(R.id.onefund_transitem_tv_id);
 
             view.setTag(vholder);
         } else {
@@ -69,6 +71,8 @@ public class OnefundTransListAdapter extends BaseAdapter {
         vholder.tvTransPrice.setText(String.valueOf(onefundTransList.get(position).getTransPrice()));
         vholder.tvTransShares.setText(String.valueOf(onefundTransList.get(position).getTransShares()));
         vholder.tvTransAmount.setText(String.valueOf(onefundTransList.get(position).getTransAmount()));
+        vholder.tvTransId.setText(String.valueOf(onefundTransList.get(position).getTransId()));
+
 
         return view;
     }
