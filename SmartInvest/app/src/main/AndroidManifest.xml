@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OnefundTransLvItemActivity"></activity>
+        <activity android:name=".UpdateTransActivity"></activity>
+        <activity android:name=".OnefundTransLvItemActivity" />
         <activity android:name=".AddTransActivity" />
         <activity android:name=".OneFundDetailActivity" />
         <activity android:name=".AddFundActivity" />

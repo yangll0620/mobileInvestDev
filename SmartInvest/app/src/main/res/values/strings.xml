@@ -13,6 +13,7 @@
     <string name="onefund_history">Transaction History</string>
     <string name="onefund_addtran">Add Transactions</string>
     <string name="onefund_deltran">Delete</string>
+    <string name="onefund_updatetran">Update</string>
 
 
     <string name="addtrans_transdate">Transaction Date</string>
@@ -21,5 +22,6 @@
     <string name="addtrans_transshares">Shares</string>
     <string name="addtrans_transamount">Amount</string>
     <string name="addtrans_savetran">Save</string>
+    <string name="addtrans_updatetran">Update</string>
 
 </resources>

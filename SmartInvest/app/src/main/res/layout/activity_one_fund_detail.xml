@@ -133,16 +133,22 @@
         android:choiceMode="singleChoice" />
 
     <Button
-        android:id="@+id/onefund_btn_deltrans"
+        android:id="@+id/onefund_btn_updatetrans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/onefunddetail_tv_totalreturn"
-        android:layout_marginLeft="47dp"
-        android:layout_marginTop="54dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginTop="32dp"
+        android:layout_toRightOf="@+id/onefund_tv_labelpeakannualreturn"
+        android:text="@string/onefund_updatetran" />
+    <Button
+        android:id="@+id/onefund_btn_deltrans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/onefund_btn_updatetrans"
+        android:layout_marginLeft="46dp"
+        android:layout_marginTop="2dp"
         android:layout_toRightOf="@+id/onefund_tv_labelpeakannualreturn"
         android:text="@string/onefund_deltran" />
-
-
-
 
 </RelativeLayout>

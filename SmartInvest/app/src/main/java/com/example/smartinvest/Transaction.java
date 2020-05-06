@@ -1,8 +1,9 @@
 package com.example.smartinvest;
 
+
 import java.util.Date;
 
-public class Transaction implements Comparable<Transaction>{
+public class Transaction implements Comparable<Transaction> {
     private String transFundSymbol;
     private String transFundName;
     private Date transDate;
@@ -99,6 +100,4 @@ public class Transaction implements Comparable<Transaction>{
             return 0;
         }
     }
-
-
 }

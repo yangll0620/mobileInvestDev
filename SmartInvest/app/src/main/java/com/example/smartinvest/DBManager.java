@@ -312,8 +312,30 @@ public class DBManager {
 
     public void deleteTrans(long _id){
         database.delete(DatabaseHelper.TABLENAME_TRANS, DatabaseHelper.TRANS_ID + "=" + _id, null);
+
     }
 
+    public void updateTrans(Transaction trans){
+
+        // update the value the transaction from the DB
+
+        long transFundId = trans.getTransId();
+        // initialize a contentValues, and put the contentValues
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DatabaseHelper.TRANS_FUNDSYMBOL, trans.getTransFundSymbol());
+        contentValues.put(DatabaseHelper.TRANS_FUNDNAME, trans.getTransFundName());
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        contentValues.put(DatabaseHelper.TRANS_DATE, df.format(trans.getTransDate()));
+        contentValues.put(DatabaseHelper.TRANS_PRICE, (float)trans.getTransPrice());
+        contentValues.put(DatabaseHelper.TRANS_SHARES, trans.getTransShares());
+        contentValues.put(DatabaseHelper.TRANS_AMOUNT, (float)trans.getTransAmount());
+
+
+        database.update(DatabaseHelper.TABLENAME_TRANS, contentValues ,DatabaseHelper.TRANS_ID + "=" + transFundId, null);
+    }
 
     public void deleteALL()
     {
