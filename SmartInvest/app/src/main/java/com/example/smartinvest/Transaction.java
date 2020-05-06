@@ -28,7 +28,16 @@ public class Transaction implements Comparable<Transaction> {
         this.transAmount = amount;
     }
 
-
+    public Transaction(String fundSymbol, String fundName, Date date, float price, int shares, float amount, long id)
+    {
+        this.transFundSymbol = fundSymbol;
+        this.transFundName = fundName;
+        this.transDate = date;
+        this.transPrice = price;
+        this.transShares = shares;
+        this.transAmount = amount;
+        this.transId = id;
+    }
 
     public String getTransFundSymbol() { return this.transFundSymbol; }
     public void setTransFundSymbol(String transFundSymbol) { this.transFundSymbol = transFundSymbol; }

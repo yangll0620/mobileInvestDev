@@ -21,6 +21,7 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
     public String transFundName, transFundSymbol;
     public int transShares;
     public float transAmount, transPrice;
+    public long transId;
 
     DatePicker dp_transdate;
 
@@ -47,6 +48,7 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
         transPrice = intent_parent.getFloatExtra(OneFundDetailActivity.EXTRA_TRANSPRICE, -1);
         transShares = intent_parent.getIntExtra(OneFundDetailActivity.EXTRA_TRANSSHARES, 0);
         transAmount = intent_parent.getFloatExtra(OneFundDetailActivity.EXTRA_TRANSAMOUNT,-1);
+        transId = intent_parent.getLongExtra(OneFundDetailActivity.EXTRA_TRANSID, -1);
 
 
         /** Set the transaction state drop-down list**/
@@ -106,8 +108,9 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
                 shares = Integer.valueOf(et_shares.getText().toString());
                 amount = Float.valueOf(et_amount.getText().toString());
 
+
                 // update new transaction record
-                Transaction trans = new Transaction(transFundSymbol, transFundName, transDate, price, shares, amount);
+                Transaction trans = new Transaction(transFundSymbol, transFundName, transDate, price, shares, amount,transId);
 
                 dbManager.updateTrans(trans);
                 dbManager.close();

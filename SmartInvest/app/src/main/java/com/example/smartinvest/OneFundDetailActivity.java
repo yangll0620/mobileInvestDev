@@ -32,6 +32,8 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
     public static final String EXTRA_TRANSPRICE  = "transPrice";
     public static final String EXTRA_TRANSSHARES  = "transShares";
     public static final String EXTRA_TRANSAMOUNT  = "transAmount";
+    public static final String EXTRA_TRANSID  = "transId";
+
 
 
     String fundSymbol, fundName;
@@ -160,6 +162,8 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
                 intent_updateTrans.putExtra(EXTRA_TRANSFUNDSYMBOL, selectedTrans1.getTransFundSymbol() );
                 intent_updateTrans.putExtra(EXTRA_TRANSSHARES, selectedTrans1.getTransShares() );
                 intent_updateTrans.putExtra(EXTRA_TRANSAMOUNT, selectedTrans1.getTransAmount() );
+                intent_updateTrans.putExtra(EXTRA_TRANSID, selectedTrans1.getTransId() );
+
                 startActivityForResult(intent_updateTrans, UPDATETRANs_REQUEST_CODE);
                 break;
 
