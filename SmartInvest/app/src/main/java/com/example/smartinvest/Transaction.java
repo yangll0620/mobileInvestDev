@@ -1,13 +1,15 @@
 package com.example.smartinvest;
 
+
 import java.util.Date;
 
-public class Transaction implements Comparable<Transaction>{
+public class Transaction implements Comparable<Transaction> {
     private String transFundSymbol;
     private String transFundName;
     private Date transDate;
     private float transPrice, transAmount;
     private int transShares;
+    private long transId;
 
 
     public Transaction()
@@ -26,7 +28,16 @@ public class Transaction implements Comparable<Transaction>{
         this.transAmount = amount;
     }
 
-
+    public Transaction(String fundSymbol, String fundName, Date date, float price, int shares, float amount, long id)
+    {
+        this.transFundSymbol = fundSymbol;
+        this.transFundName = fundName;
+        this.transDate = date;
+        this.transPrice = price;
+        this.transShares = shares;
+        this.transAmount = amount;
+        this.transId = id;
+    }
 
     public String getTransFundSymbol() { return this.transFundSymbol; }
     public void setTransFundSymbol(String transFundSymbol) { this.transFundSymbol = transFundSymbol; }
@@ -77,6 +88,13 @@ public class Transaction implements Comparable<Transaction>{
     }
 
 
+    public void setTransId(long transId) { this.transId = transId; }
+    public long getTransId()
+    {
+        return this.transId;
+    }
+
+
 
     @Override
     public int compareTo(Transaction trans) {
@@ -91,6 +109,4 @@ public class Transaction implements Comparable<Transaction>{
             return 0;
         }
     }
-
-
 }
