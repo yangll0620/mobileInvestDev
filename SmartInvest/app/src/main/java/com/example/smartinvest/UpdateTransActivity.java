@@ -12,9 +12,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.Executor;
+
 
 public class UpdateTransActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,6 +25,7 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
     public int transShares;
     public float transAmount, transPrice;
     public long transId;
+    public Date transDate;
 
     DatePicker dp_transdate;
 
@@ -49,7 +53,18 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
         transShares = intent_parent.getIntExtra(OneFundDetailActivity.EXTRA_TRANSSHARES, 0);
         transAmount = intent_parent.getFloatExtra(OneFundDetailActivity.EXTRA_TRANSAMOUNT,-1);
         transId = intent_parent.getLongExtra(OneFundDetailActivity.EXTRA_TRANSID, -1);
+        String transDateString = intent_parent.getStringExtra(OneFundDetailActivity.EXTRA_TRANSDATE);
+        String DateArray[]= transDateString.split("/");
 
+
+        try{
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            transDate = format.parse(transDateString);
+        }catch (ParseException e){
+            Calendar cal = Calendar.getInstance();
+            cal.set(dp_transdate.getYear(), dp_transdate.getMonth(), dp_transdate.getDayOfMonth());
+            transDate = cal.getTime();
+        }
 
         /** Set the transaction state drop-down list**/
         //get the spinner from the xml.
@@ -66,6 +81,7 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
         et_shares = (EditText) findViewById(R.id.addtrans_et_transshares);
         et_amount = (EditText) findViewById(R.id.addtrans_et_transamount);
 
+
         // Date Picker View
         dp_transdate = (DatePicker) findViewById(R.id.addtrans_dp_transdate);
 
@@ -74,6 +90,9 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
         et_price.setText(String.valueOf(transPrice));
         et_shares.setText(String.valueOf(transShares));
         et_amount.setText(String.valueOf(transAmount));
+
+        // need to explain here, the monthOfYear here start from 0, that's why put -1 in the monthofyear arg
+        dp_transdate.init( Integer.parseInt(DateArray[2]), Integer.parseInt(DateArray[1])-1, Integer.parseInt(DateArray[0]), null);
 
         // set btnAddTrans disable and invisible
         btnAddTrans = (Button) findViewById(R.id.addtrans_btn_savetrans);
