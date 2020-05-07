@@ -72,7 +72,7 @@ public class AddTransActivity extends AppCompatActivity implements View.OnClickL
         btnAddTrans.setOnClickListener(this);
 
         // set btnUpdateTrans disable and invisible
-        btnUpdateTrans = (Button) findViewById(R.id.addtrans_btn_savetrans);
+        btnUpdateTrans = (Button) findViewById(R.id.addtrans_btn_updatetrans);
         btnUpdateTrans.setVisibility(View.INVISIBLE);
         btnUpdateTrans.setEnabled(false);
 

@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +34,7 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
     public static final String EXTRA_TRANSSHARES  = "transShares";
     public static final String EXTRA_TRANSAMOUNT  = "transAmount";
     public static final String EXTRA_TRANSID  = "transId";
+    public static final String EXTRA_TRANSDATE = "transdate";
 
 
 
@@ -163,6 +165,8 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
                 intent_updateTrans.putExtra(EXTRA_TRANSSHARES, selectedTrans1.getTransShares() );
                 intent_updateTrans.putExtra(EXTRA_TRANSAMOUNT, selectedTrans1.getTransAmount() );
                 intent_updateTrans.putExtra(EXTRA_TRANSID, selectedTrans1.getTransId() );
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                intent_updateTrans.putExtra(EXTRA_TRANSDATE, df.format(selectedTrans1.getTransDate()));
 
                 startActivityForResult(intent_updateTrans, UPDATETRANs_REQUEST_CODE);
                 break;
