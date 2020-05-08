@@ -192,13 +192,15 @@ public class DBManager {
             {
                 int coli = cursor.getColumnIndex(colName);
                 switch (colName){
-                    case "fundSymbol":
+                    case DatabaseHelper.TRANS_ID:
+                        trans.setTransId(cursor.getLong(coli));
+                    case DatabaseHelper.TRANS_FUNDSYMBOL:
                         trans.setTransFundSymbol(cursor.getString(coli));
                         break;
-                    case "fundName":
+                    case DatabaseHelper.TRANS_FUNDNAME:
                         trans.setTransFundName(cursor.getString(coli));
                         break;
-                    case "date":
+                    case DatabaseHelper.TRANS_DATE:
                         try {
                             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                             Date transDate = format.parse(cursor.getString(coli));
@@ -207,13 +209,13 @@ public class DBManager {
                             e.printStackTrace();
                         }
                         break;
-                    case "price":
+                    case DatabaseHelper.TRANS_PRICE:
                         trans.setTransPrice(cursor.getFloat(coli));
                         break;
-                    case "shares":
+                    case DatabaseHelper.TRANS_SHARES:
                         trans.setTransShares(cursor.getInt(coli));
                         break;
-                    case "amount":
+                    case DatabaseHelper.TRANS_AMOUNT:
                         trans.setTransAmount(cursor.getFloat(coli));
                         break;
                 }
@@ -306,6 +308,33 @@ public class DBManager {
 
     public void delete(long _id){
         database.delete(DatabaseHelper.TABLENAME_SAVEDFUNDS, DatabaseHelper.SAVEDFUNDS_ID + "=" + _id, null);
+    }
+
+    public void deleteTrans(long _id){
+        database.delete(DatabaseHelper.TABLENAME_TRANS, DatabaseHelper.TRANS_ID + "=" + _id, null);
+
+    }
+
+    public void updateTrans(Transaction trans){
+
+        // update the value the transaction from the DB
+
+        long transFundId = trans.getTransId();
+        // initialize a contentValues, and put the contentValues
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DatabaseHelper.TRANS_FUNDSYMBOL, trans.getTransFundSymbol());
+        contentValues.put(DatabaseHelper.TRANS_FUNDNAME, trans.getTransFundName());
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        contentValues.put(DatabaseHelper.TRANS_DATE, df.format(trans.getTransDate()));
+        contentValues.put(DatabaseHelper.TRANS_PRICE, (float)trans.getTransPrice());
+        contentValues.put(DatabaseHelper.TRANS_SHARES, trans.getTransShares());
+        contentValues.put(DatabaseHelper.TRANS_AMOUNT, (float)trans.getTransAmount());
+
+
+        database.update(DatabaseHelper.TABLENAME_TRANS, contentValues ,DatabaseHelper.TRANS_ID + "=" + transFundId, null);
     }
 
     public void deleteALL()

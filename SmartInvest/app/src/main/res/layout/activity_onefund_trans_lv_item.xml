@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp">
-
 
 
     <TextView
@@ -30,5 +30,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_toRightOf="@+id/onefund_transitem_tv_shares"/>
+    <TextView
+        android:id="@+id/onefund_transitem_tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/onefund_transitem_tv_amount"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

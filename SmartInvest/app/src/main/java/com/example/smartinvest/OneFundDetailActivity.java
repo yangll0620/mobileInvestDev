@@ -16,16 +16,26 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OneFundDetailActivity extends AppCompatActivity {
+public class OneFundDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     public static final String EXTRA_FUNDSYMBOL = "fundSymbol";
     public static final String EXTRA_FUNDNAME = "fundName";
+
+    public static final String EXTRA_TRANSFUNDNAME  = "transFundName";
+    public static final String EXTRA_TRANSFUNDSYMBOL  = "transFundSymbol";
+    public static final String EXTRA_TRANSPRICE  = "transPrice";
+    public static final String EXTRA_TRANSSHARES  = "transShares";
+    public static final String EXTRA_TRANSAMOUNT  = "transAmount";
+    public static final String EXTRA_TRANSID  = "transId";
+    public static final String EXTRA_TRANSDATE = "transdate";
+
 
 
     String fundSymbol, fundName;
@@ -49,8 +59,11 @@ public class OneFundDetailActivity extends AppCompatActivity {
     OnefundTransListAdapter onefundTransList_adapter;
     ViewGroup onefundTransListheader_vg;
     private static final int ADDTRANs_REQUEST_CODE = 0;
+    private static final int UPDATETRANs_REQUEST_CODE = 1;
     public static final String DATEFORMAT = "MM/dd/YYYY";
-
+    public int selectedPos;
+    public Button btnDelrecord;
+    public Button btnUpdated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +105,12 @@ public class OneFundDetailActivity extends AppCompatActivity {
         onefundTransList_lv = (ListView) findViewById(R.id.onefund_lv_translist);
         onefundTransList_lv.setEmptyView(findViewById(R.id.main_tv_empty));
         onefundTransList_lv.setAdapter(onefundTransList_adapter);
+        onefundTransList_lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedPos = position;
+            }
+        });
 
 
         /* Test */
@@ -106,8 +125,55 @@ public class OneFundDetailActivity extends AppCompatActivity {
 
         annualReturn_tv.setText(String.valueOf(XIRR * 100) + "%");
 
-    }
+        // delete a selected transaction
+        btnDelrecord = (Button) findViewById(R.id.onefund_btn_deltrans);
+        btnDelrecord.setOnClickListener(this);
 
+        // update trans button
+        btnUpdated = (Button) findViewById(R.id.onefund_btn_updatetrans);
+        btnUpdated.setOnClickListener(this);
+
+    }
+    @Override
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.onefund_btn_deltrans:
+
+                Transaction selectedTrans = (Transaction) onefundTransList_lv.getItemAtPosition(selectedPos);
+                long transId = selectedTrans.getTransId();
+
+                // delete the selected Trans through its transId
+                dbManager.deleteTrans(transId);
+
+                // update the transaction list view
+                onefundTransList_arrayList.remove(selectedPos);
+                onefundTransList_adapter.notifyDataSetChanged();
+
+                onefundTransList_lv.invalidateViews();
+
+                break;
+
+            case R.id.onefund_btn_updatetrans:
+
+                Transaction selectedTrans1 = (Transaction) onefundTransList_lv.getItemAtPosition(selectedPos);
+
+                //start the update trans activity
+                Intent intent_updateTrans = new Intent(getApplicationContext(), UpdateTransActivity.class);
+                intent_updateTrans.putExtra(EXTRA_TRANSPRICE, selectedTrans1.getTransPrice() );
+                intent_updateTrans.putExtra(EXTRA_TRANSFUNDNAME, selectedTrans1.getTransFundName() );
+                intent_updateTrans.putExtra(EXTRA_TRANSFUNDSYMBOL, selectedTrans1.getTransFundSymbol() );
+                intent_updateTrans.putExtra(EXTRA_TRANSSHARES, selectedTrans1.getTransShares() );
+                intent_updateTrans.putExtra(EXTRA_TRANSAMOUNT, selectedTrans1.getTransAmount() );
+                intent_updateTrans.putExtra(EXTRA_TRANSID, selectedTrans1.getTransId() );
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                intent_updateTrans.putExtra(EXTRA_TRANSDATE, df.format(selectedTrans1.getTransDate()));
+
+                startActivityForResult(intent_updateTrans, UPDATETRANs_REQUEST_CODE);
+                break;
+
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -136,26 +202,47 @@ public class OneFundDetailActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {/* for returning the result */
 
-        if(requestCode == ADDTRANs_REQUEST_CODE)
-        {
-            boolean addedTrans = data.getBooleanExtra(AddTransActivity.RESULT_ADDEDTRANS,false);
-            if(addedTrans)
-            {
-                // update shares, avgcost
-                shares = dbManager.getShares(fundSymbol);
-                shares_tv.setText(String.valueOf(shares));
-                cost = dbManager.getAvgCost(fundSymbol);
-                cost_tv.setText(String.valueOf(cost));
+        switch (requestCode){
+            case ADDTRANs_REQUEST_CODE:
+                boolean addedTrans = data.getBooleanExtra(AddTransActivity.RESULT_ADDEDTRANS,false);
+                if(addedTrans) {
+                    // update shares, avgcost
+                    shares = dbManager.getShares(fundSymbol);
+                    shares_tv.setText(String.valueOf(shares));
+                    cost = dbManager.getAvgCost(fundSymbol);
+                    cost_tv.setText(String.valueOf(cost));
 
 
 
-                /*update trans list*/
-                onefundTransList_arrayList.clear();
-                onefundTransList_arrayList.addAll(dbManager.fetchTrans(fundSymbol));
-                onefundTransList_adapter.notifyDataSetChanged();
-                onefundTransList_lv.invalidateViews();
-            }
+                    /*update trans list*/
+                    onefundTransList_arrayList.clear();
+                    onefundTransList_arrayList.addAll(dbManager.fetchTrans(fundSymbol));
+                    onefundTransList_adapter.notifyDataSetChanged();
+                    onefundTransList_lv.invalidateViews();
+                }
+                break;
+
+
+            case UPDATETRANs_REQUEST_CODE:
+                boolean updatedTrans = data.getBooleanExtra(UpdateTransActivity.RESULT_UPDATEDTRANS, false);
+                if (updatedTrans){
+                    // update shares, avgcost
+                    shares = dbManager.getShares(fundSymbol);
+                    shares_tv.setText(String.valueOf(shares));
+                    cost = dbManager.getAvgCost(fundSymbol);
+                    cost_tv.setText(String.valueOf(cost));
+
+
+
+                    /*update trans list*/
+                    onefundTransList_arrayList.clear();
+                    onefundTransList_arrayList.addAll(dbManager.fetchTrans(fundSymbol));
+                    onefundTransList_adapter.notifyDataSetChanged();
+                    onefundTransList_lv.invalidateViews();
+                }
+                break;
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 

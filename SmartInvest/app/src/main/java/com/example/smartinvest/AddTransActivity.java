@@ -20,11 +20,11 @@ import static com.example.smartinvest.SearchFundIntentService.RESULT_EXTRA;
 
 public class AddTransActivity extends AppCompatActivity implements View.OnClickListener{
 
-    //CalendarView cv_transdate;
+
     DatePicker dp_transdate;
 
     EditText et_price, et_shares, et_amount;
-    Button btnAddTrans;
+    Button btnAddTrans, btnUpdateTrans;
 
     String fundSymbol, fundName;
 
@@ -67,8 +67,14 @@ public class AddTransActivity extends AppCompatActivity implements View.OnClickL
         dp_transdate = (DatePicker) findViewById(R.id.addtrans_dp_transdate);
 
 
+        // set btnAddTrans OnClickListener
         btnAddTrans = (Button) findViewById(R.id.addtrans_btn_savetrans);
         btnAddTrans.setOnClickListener(this);
+
+        // set btnUpdateTrans disable and invisible
+        btnUpdateTrans = (Button) findViewById(R.id.addtrans_btn_updatetrans);
+        btnUpdateTrans.setVisibility(View.INVISIBLE);
+        btnUpdateTrans.setEnabled(false);
 
 
         dbManager = new DBManager(this);
