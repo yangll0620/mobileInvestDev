@@ -22,12 +22,21 @@ SmartInvest/.idea/.name
 SmartInvest/.idea/compiler.xml
 SmartInvest/.idea/copyright/profiles_settings.xml
 SmartInvest/.idea/encodings.xml
+SmartInvest/.idea/gradle.xm
 SmartInvest/.idea/misc.xml
 SmartInvest/.idea/modules.xml
 SmartInvest/.idea/scopes/scope_settings.xml
 SmartInvest/.idea/vcs.xml
 SmartInvest/.idea/caches
 *.iml
+
+
+SmartInvest/.idea/caches/build_file_checksums.ser
+SmartInvest/.idea/caches/gradle_models.ser
+
+
+SmartInvest/.idea/modules.xml
+SmartInvest/.idea/workspace.xml
 
 
 

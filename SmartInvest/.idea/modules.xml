@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SmartInvest.iml" filepath="$PROJECT_DIR$/SmartInvest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/SmartInvest-app.iml" filepath="$PROJECT_DIR$/app/SmartInvest-app.iml" group="SmartInvest/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mobileInvestDev-SmartInvest.iml" filepath="$PROJECT_DIR$/mobileInvestDev-SmartInvest.iml" group="SmartInvest" />
     </modules>
   </component>
 </project>
