@@ -37,6 +37,10 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
     public static final String EXTRA_TRANSDATE = "transdate";
 
 
+    public static final String FLOATFORMAT = "%.2f";
+
+    public static final String[] tranTypes = new String[]{"Buy", "Sell"};
+
 
     String fundSymbol, fundName;
 
@@ -77,6 +81,13 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
         setTitle(fundName);
 
 
+        /** Find View by Id**/
+        shares_tv = findViewById(R.id.onefund_tv_shares);
+        cost_tv = findViewById(R.id.onefund_tv_avgcost);
+        annualReturn_tv = findViewById(R.id.onefund_tv_annualreturn);
+
+
+
         currPrice = (float)204.36;
 
         /** SQLite databse**/
@@ -84,16 +95,6 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
         dbManager.open();
         shares = dbManager.getShares(fundSymbol);
         cost = dbManager.getAvgCost(fundSymbol);
-
-
-
-        /**Onefund  Basic Information **/
-        shares_tv = findViewById(R.id.onefund_tv_shares);
-        cost_tv = findViewById(R.id.onefund_tv_avgcost);
-        annualReturn_tv = findViewById(R.id.onefund_tv_annualreturn);
-
-        shares_tv.setText(String.valueOf(shares));
-        cost_tv.setText(String.valueOf(cost));
 
 
 
@@ -113,17 +114,21 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
         });
 
 
-        /* Test */
-        List <DateAmount> dateValueList = new ArrayList<DateAmount>();
+
+        /**Set Onefund  Basic Information **/
+        shares_tv.setText(String.valueOf(shares));
+        cost_tv.setText(String.format(FLOATFORMAT, cost));
+
+        // Generate dataAmount List of transaction, data amount is a pair of date and amount
+        List <DateAmount> dateAmountList = new ArrayList<DateAmount>();
         for(Transaction trans: onefundTransList_arrayList){
-            dateValueList.add(new DateAmount(trans));
+            dateAmountList.add(new DateAmount(trans));
         }
-
         // add Today's amount
-        dateValueList.add(new DateAmount(new Date(), -currPrice * shares));
-        double XIRR = DateAmount.calcXIRR(dateValueList,0.01,0.0001,0.001,100000);
+        dateAmountList.add(new DateAmount(new Date(), -currPrice * shares));
+        double XIRR = DateAmount.calcXIRR(dateAmountList,0.01,0.0001,0.001,100000);
+        annualReturn_tv.setText(String.format(FLOATFORMAT, XIRR * 100) + "%");
 
-        annualReturn_tv.setText(String.valueOf(XIRR * 100) + "%");
 
         // delete a selected transaction
         btnDelrecord = (Button) findViewById(R.id.onefund_btn_deltrans);
@@ -132,6 +137,7 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
         // update trans button
         btnUpdated = (Button) findViewById(R.id.onefund_btn_updatetrans);
         btnUpdated.setOnClickListener(this);
+
 
     }
     @Override

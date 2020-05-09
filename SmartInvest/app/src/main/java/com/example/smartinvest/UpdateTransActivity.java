@@ -3,7 +3,6 @@ package com.example.smartinvest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,7 +29,8 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
     DatePicker dp_transdate;
 
     EditText et_price, et_shares, et_amount;
-    Button btnAddTrans, btnUpdateTrans;
+    Button btnUpdateTrans;
+    Spinner sp_transstate;
 
     String fundSymbol, fundName;
 
@@ -43,7 +43,7 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_trans);
+        setContentView(R.layout.activity_save_trans);
 
         // get the original transaction
         Intent intent_parent = getIntent();
@@ -68,22 +68,30 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
 
         /** Set the transaction state drop-down list**/
         //get the spinner from the xml.
-        Spinner sp_transstate= findViewById(R.id.addtrans_spinner_transstate);
-        //create a list of items for the spinner.
-        String[] items = new String[]{"Buy", "Sell"};
+        sp_transstate= findViewById(R.id.savetrans_spinner_transstate);
         //There are multiple variations of this, but this is the basic variant.
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, OneFundDetailActivity.tranTypes);
         //set the spinners adapter to the previously created one.
         sp_transstate.setAdapter(adapter);
 
+        if(transShares>0)
+        {// buy
+            sp_transstate.setSelection(0);
+        }
+        else
+        {// sell
+            sp_transstate.setSelection(1);
+        }
+
+
         // EditText Views of price, shares, and amount
-        et_price = (EditText) findViewById(R.id.addtrans_et_transprice);
-        et_shares = (EditText) findViewById(R.id.addtrans_et_transshares);
-        et_amount = (EditText) findViewById(R.id.addtrans_et_transamount);
+        et_price = (EditText) findViewById(R.id.savetrans_et_transprice);
+        et_shares = (EditText) findViewById(R.id.savetrans_et_transshares);
+        et_amount = (EditText) findViewById(R.id.savetrans_et_transamount);
 
 
         // Date Picker View
-        dp_transdate = (DatePicker) findViewById(R.id.addtrans_dp_transdate);
+        dp_transdate = (DatePicker) findViewById(R.id.savetrans_dp_transdate);
 
 
         // visualize the original transaction as default
@@ -94,13 +102,9 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
         // need to explain here, the monthOfYear here start from 0, that's why put -1 in the monthofyear arg
         dp_transdate.init( Integer.parseInt(DateArray[2]), Integer.parseInt(DateArray[1])-1, Integer.parseInt(DateArray[0]), null);
 
-        // set btnAddTrans disable and invisible
-        btnAddTrans = (Button) findViewById(R.id.addtrans_btn_savetrans);
-        btnAddTrans.setVisibility(View.INVISIBLE);
-        btnAddTrans.setEnabled(false);
 
         //  setOnClickLister for btnUpdateTrans
-        btnUpdateTrans = (Button) findViewById(R.id.addtrans_btn_updatetrans);
+        btnUpdateTrans = (Button) findViewById(R.id.savetrans_btn_savetrans);
         btnUpdateTrans.setOnClickListener(this);
 
 
@@ -111,7 +115,7 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.addtrans_btn_updatetrans:
+            case R.id.savetrans_btn_savetrans:
                 float price, amount;
                 int shares;
                 Date transDate;
@@ -126,6 +130,11 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
                 price = Float.valueOf(et_price.getText().toString());
                 shares = Integer.valueOf(et_shares.getText().toString());
                 amount = Float.valueOf(et_amount.getText().toString());
+
+                // if it is sell, shares = -shares
+                if (sp_transstate.getSelectedItemId() == 1){
+                    shares = -shares;
+                }
 
 
                 // update new transaction record

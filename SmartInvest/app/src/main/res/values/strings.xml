@@ -16,12 +16,12 @@
     <string name="onefund_updatetran">Update</string>
 
 
-    <string name="addtrans_transdate">Transaction Date</string>
-    <string name="addtrans_transstate">Transaction State</string>
-    <string name="addtrans_transprice">Price</string>
-    <string name="addtrans_transshares">Shares</string>
-    <string name="addtrans_transamount">Amount</string>
-    <string name="addtrans_savetran">Save</string>
-    <string name="addtrans_updatetran">Update</string>
+    <string name="savetrans_transdate">Transaction Date</string>
+    <string name="saverans_transstate">Transaction Type</string>
+    <string name="savetrans_transprice">Price</string>
+    <string name="savetrans_transshares">Shares</string>
+    <string name="savetrans_transamount">Amount</string>
+    <string name="savetrans_savetran">Save</string>
+    <string name="savetrans_updatetran">Update</string>
 
 </resources>

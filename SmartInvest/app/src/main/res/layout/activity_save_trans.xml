@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+
+    <TextView
+        android:id="@+id/savetrans_tv_transdatelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/savetrans_transdate"
+        android:textStyle="bold"/>
+
+
+
+    <DatePicker
+        android:id="@+id/savetrans_dp_transdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/savetrans_tv_transdatelabel"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"/>
+
+
+
+    <TextView
+        android:id="@+id/savetrans_tv_transstatelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/savetrans_dp_transdate"
+        android:text="@string/saverans_transstate"
+        android:textStyle="bold"/>
+
+
+    <Spinner
+        android:id="@+id/savetrans_spinner_transstate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/savetrans_tv_transstatelabel"
+        android:layout_marginTop="10dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown" />
+
+
+
+    <TextView
+        android:id="@+id/savetrans_tv_transpricelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/savetrans_spinner_transstate"
+        android:text="@string/savetrans_transprice"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/savetrans_et_transprice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/savetrans_tv_transpricelabel"
+        android:ems="10"
+        android:hint="@string/savetrans_transprice">
+
+        <requestFocus />
+    </EditText>
+
+
+
+
+    <TextView
+        android:id="@+id/savetrans_tv_transshareslabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/savetrans_et_transprice"
+        android:text="@string/savetrans_transshares"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/savetrans_et_transshares"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/savetrans_tv_transshareslabel"
+        android:ems="10"
+        android:hint="@string/savetrans_transshares">
+
+        <requestFocus />
+    </EditText>
+
+
+    <TextView
+        android:id="@+id/savetrans_tv_transamountlabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/savetrans_et_transshares"
+        android:text="@string/savetrans_transamount"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/savetrans_et_transamount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/savetrans_tv_transamountlabel"
+        android:ems="10"
+        android:hint="@string/savetrans_transamount">
+
+        <requestFocus />
+    </EditText>
+
+
+    <Button
+        android:id="@+id/savetrans_btn_savetrans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_below="@id/savetrans_et_transamount"
+        android:text="@string/savetrans_savetran"/>
+
+
+</RelativeLayout>
