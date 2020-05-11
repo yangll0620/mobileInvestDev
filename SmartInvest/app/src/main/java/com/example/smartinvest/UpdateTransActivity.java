@@ -26,13 +26,13 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
     public long transId;
     public Date transDate;
 
-    DatePicker dp_transdate;
 
+
+    DatePicker dp_transdate;
     EditText et_price, et_shares, et_amount;
     Button btnUpdateTrans;
     Spinner sp_transstate;
 
-    String fundSymbol, fundName;
 
     DBManager dbManager;
 
@@ -45,31 +45,54 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_trans);
 
-        // get the original transaction
+
+
+        /**  get the original transaction using get***Extra **/
         Intent intent_parent = getIntent();
-        transFundName = intent_parent.getStringExtra(OneFundDetailActivity.EXTRA_TRANSFUNDNAME);
+        transId = intent_parent.getLongExtra(OneFundDetailActivity.EXTRA_TRANSID, -1);
         transFundSymbol = intent_parent.getStringExtra(OneFundDetailActivity.EXTRA_TRANSFUNDSYMBOL);
+        transFundName = intent_parent.getStringExtra(OneFundDetailActivity.EXTRA_TRANSFUNDNAME);
         transPrice = intent_parent.getFloatExtra(OneFundDetailActivity.EXTRA_TRANSPRICE, -1);
         transShares = intent_parent.getIntExtra(OneFundDetailActivity.EXTRA_TRANSSHARES, 0);
         transAmount = intent_parent.getFloatExtra(OneFundDetailActivity.EXTRA_TRANSAMOUNT,-1);
-        transId = intent_parent.getLongExtra(OneFundDetailActivity.EXTRA_TRANSID, -1);
+
         String transDateString = intent_parent.getStringExtra(OneFundDetailActivity.EXTRA_TRANSDATE);
-        String DateArray[]= transDateString.split("/");
-
-
+        Calendar transDateCal = Calendar.getInstance();
         try{
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat format = new SimpleDateFormat(DBManager.DATEFORMATINDB);
             transDate = format.parse(transDateString);
+            transDateCal.setTime(transDate);
         }catch (ParseException e){
-            Calendar cal = Calendar.getInstance();
-            cal.set(dp_transdate.getYear(), dp_transdate.getMonth(), dp_transdate.getDayOfMonth());
-            transDate = cal.getTime();
+            e.printStackTrace();
         }
 
-        /** Set the transaction state drop-down list**/
-        //get the spinner from the xml.
+
+
+        /** Find View by Id **/
+        // EditText Views of price, shares, and amount
+        et_price = (EditText) findViewById(R.id.savetrans_et_transprice);
+        et_shares = (EditText) findViewById(R.id.savetrans_et_transshares);
+        et_amount = (EditText) findViewById(R.id.savetrans_et_transamount);
+
+        // spinner view of trans type
         sp_transstate= findViewById(R.id.savetrans_spinner_transstate);
-        //There are multiple variations of this, but this is the basic variant.
+
+        // Date Picker View
+        dp_transdate = (DatePicker) findViewById(R.id.savetrans_dp_transdate);
+
+
+
+        /** Set the transaction details **/
+        // price, shares and amount
+        et_price.setText(String.valueOf(transPrice));
+        et_shares.setText(String.valueOf(Math.abs(transShares)));
+        et_amount.setText(String.valueOf(Math.abs(transAmount)));
+
+
+        // Set transDate
+        dp_transdate.init(transDateCal.get(Calendar.YEAR), transDateCal.get(Calendar.MONTH), transDateCal.get(Calendar.DAY_OF_MONTH), null);
+
+        // Set the transaction type drop-down
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, OneFundDetailActivity.tranTypes);
         //set the spinners adapter to the previously created one.
         sp_transstate.setAdapter(adapter);
@@ -84,30 +107,13 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
         }
 
 
-        // EditText Views of price, shares, and amount
-        et_price = (EditText) findViewById(R.id.savetrans_et_transprice);
-        et_shares = (EditText) findViewById(R.id.savetrans_et_transshares);
-        et_amount = (EditText) findViewById(R.id.savetrans_et_transamount);
 
-
-        // Date Picker View
-        dp_transdate = (DatePicker) findViewById(R.id.savetrans_dp_transdate);
-
-
-        // visualize the original transaction as default
-        et_price.setText(String.valueOf(transPrice));
-        et_shares.setText(String.valueOf(transShares));
-        et_amount.setText(String.valueOf(transAmount));
-
-        // need to explain here, the monthOfYear here start from 0, that's why put -1 in the monthofyear arg
-        dp_transdate.init( Integer.parseInt(DateArray[2]), Integer.parseInt(DateArray[1])-1, Integer.parseInt(DateArray[0]), null);
-
-
-        //  setOnClickLister for btnUpdateTrans
+        /**  setOnClickLister for btnUpdateTrans **/
         btnUpdateTrans = (Button) findViewById(R.id.savetrans_btn_savetrans);
         btnUpdateTrans.setOnClickListener(this);
 
 
+        /** dbManager **/
         dbManager = new DBManager(this);
         dbManager.open();
     }
@@ -134,6 +140,7 @@ public class UpdateTransActivity extends AppCompatActivity implements View.OnCli
                 // if it is sell, shares = -shares
                 if (sp_transstate.getSelectedItemId() == 1){
                     shares = -shares;
+                    amount = -amount;
                 }
 
 

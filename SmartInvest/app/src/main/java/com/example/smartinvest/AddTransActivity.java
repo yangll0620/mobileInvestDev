@@ -100,6 +100,7 @@ public class AddTransActivity extends AppCompatActivity implements View.OnClickL
                 // if it is sell, shares = -shares
                 if (sp_transstate.getSelectedItemId() == 1){
                     shares = -shares;
+                    amount = -amount;
                 }
 
 

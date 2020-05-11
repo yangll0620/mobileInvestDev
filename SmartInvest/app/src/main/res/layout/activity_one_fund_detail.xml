@@ -22,7 +22,7 @@
         android:layout_below="@+id/onefund_tv_labelavgcost"
         android:textSize="17dp"
         android:textStyle="bold"
-        android:text="$209.36"/>
+        android:text="@string/onefund_nodetail"/>
 
 
     <TextView
@@ -43,28 +43,31 @@
         android:layout_toRightOf="@+id/onefund_tv_avgcost"
         android:textSize="17dp"
         android:textStyle="bold"
-        android:text="0" />
+        android:text="@string/onefund_nodetail" />
+
 
 
     <TextView
-        android:id="@+id/onefund_tv_labeltotalreturn"
+        android:id="@+id/onefund_tv_labelcurrprice"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
         android:layout_toRightOf="@+id/onefund_tv_labelshares"
-        android:text="@string/onefund_totalreturn"/>
+        android:text="@string/onefund_currprice" />
     <TextView
-        android:id="@+id/onefunddetail_tv_totalreturn"
+        android:id="@+id/onefund_tv_currprice"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:layout_below="@id/onefund_tv_labeltotalreturn"
+        android:layout_below="@id/onefund_tv_labelcurrprice"
         android:layout_toRightOf="@+id/onefund_tv_shares"
         android:textSize="17dp"
         android:textStyle="bold"
-        android:text="-42.5%"/>
+        android:text="@string/onefund_nodetail" />
+
+
 
 
     <TextView
@@ -84,7 +87,7 @@
         android:layout_below="@+id/onefund_tv_labelannualreturn"
         android:textSize="17dp"
         android:textStyle="bold"
-        android:text="+4.5%"/>
+        android:text="@string/onefund_nodetail"/>
 
 
     <TextView
@@ -106,7 +109,33 @@
         android:layout_toRightOf="@+id/onefund_tv_annualreturn"
         android:textSize="17dp"
         android:textStyle="bold"
-        android:text="+15%"/>
+        android:text="@string/onefund_nodetail"/>
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/onefund_tv_labeltotalreturn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_below="@+id/onefund_tv_currprice"
+        android:layout_toRightOf="@+id/onefund_tv_labelpeakannualreturn"
+        android:text="@string/onefund_totalreturn"/>
+    <TextView
+        android:id="@+id/onefund_tv_totalreturn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_below="@id/onefund_tv_labeltotalreturn"
+        android:layout_toRightOf="@+id/onefund_tv_peakannualreturn"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:text="@string/onefund_nodetail"/>
 
 
 
@@ -117,10 +146,32 @@
         android:id="@+id/onefund_tv_labelhistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="10dp"
         android:layout_below="@+id/onefund_tv_annualreturn"
         android:text="@string/onefund_history"/>
+
+
+
+
+    <Button
+        android:id="@+id/onefund_btn_updatetrans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/onefund_tv_peakannualreturn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/onefund_tv_labelhistory"
+        android:text="@string/onefund_updatetran" />
+    <Button
+        android:id="@+id/onefund_btn_deltrans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/onefund_tv_totalreturn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/onefund_btn_updatetrans"
+        android:text="@string/onefund_deltran" />
 
 
     <ListView
@@ -131,24 +182,5 @@
         android:layout_below="@+id/onefund_tv_labelhistory"
         android:listSelector="#666666"
         android:choiceMode="singleChoice" />
-
-    <Button
-        android:id="@+id/onefund_btn_updatetrans"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/onefunddetail_tv_totalreturn"
-        android:layout_marginLeft="46dp"
-        android:layout_marginTop="32dp"
-        android:layout_toRightOf="@+id/onefund_tv_labelpeakannualreturn"
-        android:text="@string/onefund_updatetran" />
-    <Button
-        android:id="@+id/onefund_btn_deltrans"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/onefund_btn_updatetrans"
-        android:layout_marginLeft="46dp"
-        android:layout_marginTop="2dp"
-        android:layout_toRightOf="@+id/onefund_tv_labelpeakannualreturn"
-        android:text="@string/onefund_deltran" />
 
 </RelativeLayout>

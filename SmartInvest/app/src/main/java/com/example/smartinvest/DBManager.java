@@ -23,6 +23,8 @@ public class DBManager {
 
     private SQLiteDatabase database;
 
+    public static final String DATEFORMATINDB = "MM/dd/yyyy";
+
 
 
 
@@ -64,7 +66,7 @@ public class DBManager {
         contentValues.put(DatabaseHelper.TRANS_FUNDSYMBOL, trans.getTransFundSymbol());
         contentValues.put(DatabaseHelper.TRANS_FUNDNAME, trans.getTransFundName());
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat(DATEFORMATINDB);
         contentValues.put(DatabaseHelper.TRANS_DATE, df.format(trans.getTransDate()));
         contentValues.put(DatabaseHelper.TRANS_PRICE, (float)trans.getTransPrice());
         contentValues.put(DatabaseHelper.TRANS_SHARES, trans.getTransShares());
@@ -74,12 +76,32 @@ public class DBManager {
         return rowId;
     }
 
-    public Cursor fetch(){
-        String[] columns  = new String[] {DatabaseHelper.SAVEDFUNDS_ID, DatabaseHelper.SAVEDFUNDS_FUNDSYMBOL, DatabaseHelper.SAVEDFUNDS_FUNDNAME};
 
-        Cursor cursor = database.query(DatabaseHelper.TABLENAME_SAVEDFUNDS, columns, null, null, null, null, null);
+    public void deleteTrans(long _id){
+        database.delete(DatabaseHelper.TABLENAME_TRANS, DatabaseHelper.TRANS_ID + "=" + _id, null);
 
-        return cursor;
+    }
+
+    public void updateTrans(Transaction trans){
+
+        // update the value the transaction from the DB
+
+        long transFundId = trans.getTransId();
+        // initialize a contentValues, and put the contentValues
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DatabaseHelper.TRANS_FUNDSYMBOL, trans.getTransFundSymbol());
+        contentValues.put(DatabaseHelper.TRANS_FUNDNAME, trans.getTransFundName());
+
+        DateFormat df = new SimpleDateFormat(DATEFORMATINDB);
+        contentValues.put(DatabaseHelper.TRANS_DATE, df.format(trans.getTransDate()));
+        contentValues.put(DatabaseHelper.TRANS_PRICE, (float)trans.getTransPrice());
+        contentValues.put(DatabaseHelper.TRANS_SHARES, trans.getTransShares());
+        contentValues.put(DatabaseHelper.TRANS_AMOUNT, (float)trans.getTransAmount());
+
+
+        database.update(DatabaseHelper.TABLENAME_TRANS, contentValues ,DatabaseHelper.TRANS_ID + "=" + transFundId, null);
     }
 
 
@@ -98,10 +120,10 @@ public class DBManager {
             {
                 int coli = cursor.getColumnIndex(colName);
                 switch (colName){
-                    case "fundSymbol":
+                    case DatabaseHelper.SAVEDFUNDS_FUNDSYMBOL:
                         fund.setFundSymbol(cursor.getString(coli));
                         break;
-                    case "fundName":
+                    case DatabaseHelper.SAVEDFUNDS_FUNDNAME:
                         fund.setFundName(cursor.getString(coli));
                         break;
                 }
@@ -118,70 +140,10 @@ public class DBManager {
         return array_list;
     }
 
-    public ArrayList<Transaction> fetchAllTrans()
+
+    private ArrayList<Transaction> getTransFromCursor(Cursor cursor)
     {
         ArrayList<Transaction> array_list = new ArrayList<Transaction>();
-
-        Cursor cursor = database.rawQuery("select * from " + DatabaseHelper.TABLENAME_TRANS, null);
-        cursor.moveToFirst();
-        String[] colNames = cursor.getColumnNames();
-        while(cursor.isAfterLast() == false)
-        {
-            // extract each transaction
-            Transaction trans = new Transaction();
-            for(String colName: colNames)
-            {
-                int coli = cursor.getColumnIndex(colName);
-                switch (colName){
-                    case "fundSymbol":
-                        trans.setTransFundSymbol(cursor.getString(coli));
-                        break;
-                    case "fundName":
-                        trans.setTransFundName(cursor.getString(coli));
-                        break;
-                    case "date":
-                        try {
-                            SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
-                            trans.setTransDate(format.parse(cursor.getString(coli)));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "price":
-                        trans.setTransPrice(cursor.getFloat(coli));
-                        break;
-                    case "shares":
-                        trans.setTransShares(cursor.getInt(coli));
-                        break;
-                    case "amount":
-                        trans.setTransAmount(cursor.getFloat(coli));
-                        break;
-                }
-            }
-            if(trans.completeTrans())
-            {
-                array_list.add(trans);
-            }
-
-            cursor.moveToNext();
-        }
-
-        cursor.close();
-        return array_list;
-    }
-
-    public ArrayList<Transaction> fetchTrans(String fundSymbol)
-    {/* fetch all transactions of fundSymbol */
-
-        ArrayList<Transaction> array_list = new ArrayList<Transaction>();
-
-
-        String table = DatabaseHelper.TABLENAME_TRANS;
-        String whereClause = DatabaseHelper.TRANS_FUNDSYMBOL + " = ?";
-        String[] whereArgs = new String[] {fundSymbol};
-        Cursor cursor = database.query(table, null, whereClause, whereArgs,null, null, null);
-
-
         cursor.moveToFirst();
         String[] colNames = cursor.getColumnNames();
         while(cursor.isAfterLast() == false)
@@ -202,7 +164,7 @@ public class DBManager {
                         break;
                     case DatabaseHelper.TRANS_DATE:
                         try {
-                            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                            SimpleDateFormat format = new SimpleDateFormat(DATEFORMATINDB);
                             Date transDate = format.parse(cursor.getString(coli));
                             trans.setTransDate(transDate);
                         } catch (ParseException e) {
@@ -228,9 +190,36 @@ public class DBManager {
             cursor.moveToNext();
         }
 
+        Collections.sort(array_list);
+        return array_list;
+    }
+
+
+    public ArrayList<Transaction> fetchAllTrans()
+    {
+        Cursor cursor = database.rawQuery("select * from " + DatabaseHelper.TABLENAME_TRANS, null);
+
+        // get trans from cursor
+        ArrayList<Transaction> array_list = getTransFromCursor(cursor);
+
+        cursor.close();
+        return array_list;
+    }
+
+    public ArrayList<Transaction> fetchTrans(String fundSymbol)
+    {/* fetch all transactions of fundSymbol */
+
+
+        String table = DatabaseHelper.TABLENAME_TRANS;
+        String whereClause = DatabaseHelper.TRANS_FUNDSYMBOL + " = ?";
+        String[] whereArgs = new String[] {fundSymbol};
+        Cursor cursor = database.query(table, null, whereClause, whereArgs,null, null, null);
+
+        // get trans from cursor
+        ArrayList<Transaction> array_list = getTransFromCursor(cursor);
+
         cursor.close();
 
-        Collections.sort(array_list);
         return array_list;
     }
 
@@ -310,32 +299,6 @@ public class DBManager {
         database.delete(DatabaseHelper.TABLENAME_SAVEDFUNDS, DatabaseHelper.SAVEDFUNDS_ID + "=" + _id, null);
     }
 
-    public void deleteTrans(long _id){
-        database.delete(DatabaseHelper.TABLENAME_TRANS, DatabaseHelper.TRANS_ID + "=" + _id, null);
-
-    }
-
-    public void updateTrans(Transaction trans){
-
-        // update the value the transaction from the DB
-
-        long transFundId = trans.getTransId();
-        // initialize a contentValues, and put the contentValues
-
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(DatabaseHelper.TRANS_FUNDSYMBOL, trans.getTransFundSymbol());
-        contentValues.put(DatabaseHelper.TRANS_FUNDNAME, trans.getTransFundName());
-
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        contentValues.put(DatabaseHelper.TRANS_DATE, df.format(trans.getTransDate()));
-        contentValues.put(DatabaseHelper.TRANS_PRICE, (float)trans.getTransPrice());
-        contentValues.put(DatabaseHelper.TRANS_SHARES, trans.getTransShares());
-        contentValues.put(DatabaseHelper.TRANS_AMOUNT, (float)trans.getTransAmount());
-
-
-        database.update(DatabaseHelper.TABLENAME_TRANS, contentValues ,DatabaseHelper.TRANS_ID + "=" + transFundId, null);
-    }
 
     public void deleteALL()
     {

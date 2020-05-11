@@ -70,7 +70,7 @@ public class OnefundTransListAdapter extends BaseAdapter {
         vholder.tvTransDate.setText(format.format(transDate));
         vholder.tvTransPrice.setText(String.valueOf(onefundTransList.get(position).getTransPrice()));
         vholder.tvTransShares.setText(String.valueOf(onefundTransList.get(position).getTransShares()));
-        vholder.tvTransAmount.setText(String.valueOf(onefundTransList.get(position).getTransAmount()));
+        vholder.tvTransAmount.setText(String.valueOf(Math.abs(onefundTransList.get(position).getTransAmount())));
         vholder.tvTransId.setText(String.valueOf(onefundTransList.get(position).getTransId()));
 
 
