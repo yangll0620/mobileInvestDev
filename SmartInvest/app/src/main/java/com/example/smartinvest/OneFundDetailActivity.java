@@ -16,6 +16,11 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,8 +50,6 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
     String fundSymbol, fundName;
 
 
-    float currPrice;
-
 
     /** SQLiteDatabase Variables **/
     DBManager dbManager;
@@ -67,6 +70,19 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
     public int selectedPos;
     public Button btnDelrecord;
     public Button btnUpdated;
+
+
+
+    /** Variables for Update Prices Runnable **/
+    int updateSec = 60;
+    boolean updateTag;
+
+    String serialInterval = AlphaVantageUse.inter1min;
+    Fund fundChecked;
+    FetchPriceRunnable fetchPriceRunnable;
+    public Button btnTest;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +105,6 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
         onefundTransList_lv = (ListView) findViewById(R.id.onefund_lv_translist);
 
 
-
-        currPrice = (float)201.7;
 
         /** SQLite databse**/
         dbManager = new DBManager(this);
@@ -123,19 +137,28 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
 
 
 
-        /** Update Fund Details**/
-        updateDetails();
+        /** Update Price Continually **/
+        fundChecked = new Fund(fundSymbol);
+        fetchPriceRunnable = new FetchPriceRunnable();
+        new Thread(fetchPriceRunnable).start();
 
+
+        /** Update Fund Details those are not related to price**/
+        updateDetailsNotRelatedPrice();
+
+
+
+        /** btnTest */
+        btnTest   = (Button) findViewById(R.id.onefund_btn_test);
+        btnTest.setOnClickListener(this);
 
     }
 
 
-    public void updateDetails(){
+    public void updateDetailsNotRelatedPrice(){
         onefundTransList_arrayList.clear();
         onefundTransList_arrayList.addAll(dbManager.fetchTrans(fundSymbol));
 
-
-        currprice_tv.setText(String.format(FLOATFORMAT, currPrice));
 
 
         //Set Onefund  Basic Information
@@ -148,27 +171,10 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
             int shares = dbManager.getShares(fundSymbol);
 
 
-            /* Get annual return Rate */
-            // Generate dataAmount List of transaction, data amount is a pair of date and amount
-            List <DateAmount> dateAmountList = new ArrayList<DateAmount>();
-            for(Transaction trans: onefundTransList_arrayList){
-                dateAmountList.add(new DateAmount(trans));
-            }
-            // add Today's amount
-            dateAmountList.add(new DateAmount(new Date(), -currPrice * shares));
-            double XIRR = DateAmount.calcXIRR(dateAmountList,0.01,0.01,0.001,100000);
-
-
-            // Total Return
-            float totalReturn = calcTotalReturn( onefundTransList_arrayList,  currPrice);
-
-
 
             // set all basic details
             cost_tv.setText(String.format(FLOATFORMAT, cost));
             shares_tv.setText(String.valueOf(shares));
-            annualReturn_tv.setText(String.format(FLOATFORMAT, XIRR * 100) + "%");
-            totalReturn_tv.setText(String.format(FLOATFORMAT, totalReturn * 100) +"%");
         }
 
 
@@ -218,6 +224,10 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
         long transId = selectedTrans.getTransId();
 
         switch (view.getId()){
+            case R.id.onefund_btn_test:
+                break;
+
+
             case R.id.onefund_btn_deltrans:
 
 
@@ -300,7 +310,7 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
             case ADDTRANs_REQUEST_CODE:
                 boolean addedTrans = data.getBooleanExtra(AddTransActivity.RESULT_ADDEDTRANS,false);
                 if(addedTrans) {
-                   updateDetails();
+                    updateDetailsNotRelatedPrice();
                 }
                 break;
 
@@ -308,12 +318,117 @@ public class OneFundDetailActivity extends AppCompatActivity implements View.OnC
             case UPDATETRANs_REQUEST_CODE:
                 boolean updatedTrans = data.getBooleanExtra(UpdateTransActivity.RESULT_UPDATEDTRANS, false);
                 if (updatedTrans){
-                    updateDetails();
+                    updateDetailsNotRelatedPrice();
                 }
                 break;
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+
+    /** Methods for updating prices and corresponding returns */
+
+    public void updateDetailsAlongPrice(final float currPrice){
+        // ... update the annual return rate, total return along time
+
+
+        onefundTransList_arrayList.clear();
+        onefundTransList_arrayList.addAll(dbManager.fetchTrans(fundSymbol));
+
+        if(!onefundTransList_arrayList.isEmpty()) {
+            // at least one transaction exists
+
+            /** Total Return */
+            final float totalReturn = calcTotalReturn( onefundTransList_arrayList,  currPrice);
+
+
+            /** Get annual return Rate */
+            // Generate dataAmount List of transaction, data amount is a pair of date and amount
+            List <DateAmount> dateAmountList = new ArrayList<DateAmount>();
+            for(Transaction trans: onefundTransList_arrayList){
+                dateAmountList.add(new DateAmount(trans));
+            }
+            // get current shares
+            int shares = dbManager.getShares(fundSymbol);
+            // add Today's amount
+            dateAmountList.add(new DateAmount(new Date(), -currPrice * shares));
+            final double XIRR = DateAmount.calcXIRR(dateAmountList,0.01,0.01,0.001,100000);
+
+
+
+            // update the values of annualReturn_tv and totalReturn_tv
+            annualReturn_tv.post(new Runnable() {
+                @Override
+                public void run() {
+                    annualReturn_tv.setText(String.format(FLOATFORMAT, XIRR * 100) + "%");
+                }
+            });
+            totalReturn_tv.post(new Runnable() {
+                @Override
+                public void run() {
+                    totalReturn_tv.setText(String.format(FLOATFORMAT, totalReturn * 100) +"%");
+                }
+            });
+
+        }
+
+
+        // update current price to currprice_tv
+        currprice_tv.post(new Runnable() {
+            @Override
+            public void run() {
+                currprice_tv.setText(String.format(FLOATFORMAT, currPrice));
+            }
+        });
+
+    }
+
+
+
+    class FetchPriceRunnable implements Runnable{
+        @Override
+        public void run(){
+
+            AlphaVantageUse alphaVUse = new AlphaVantageUse();;
+            String timeSeriesAlphaVQuery = AlphaVantageUse.alphaVURL + "query?function=TIME_SERIES_INTRADAY&symbol=" + fundChecked.getFundSymbol()
+                    + "&interval=" + serialInterval + "&apikey=" + AlphaVantageUse.apiKey;
+
+
+            updateTag = true;
+            float currPrice;
+            while(updateTag)
+            {/* update Stock price every updateIntervalSec */
+
+                try{
+
+                    // get current price
+                    JSONObject retrievedJSON = alphaVUse.RetrieveOnlineJSON(timeSeriesAlphaVQuery);
+                    currPrice = alphaVUse.ParsePriceTimeSeriesJSON(retrievedJSON, serialInterval);
+
+                }catch(Exception e)
+                {
+                    e.printStackTrace();
+                    currPrice = AlphaVantageUse.faultPrice;
+                }
+
+
+                updateDetailsAlongPrice(currPrice);
+
+
+                // Sleep updateSec seconds
+                try{
+                    Thread.sleep(updateSec * 1000);
+                }
+                catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    }
+
+
 
 }

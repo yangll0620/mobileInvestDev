@@ -173,6 +173,16 @@
         android:layout_toRightOf="@+id/onefund_btn_updatetrans"
         android:text="@string/onefund_deltran" />
 
+    <Button
+        android:id="@+id/onefund_btn_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/onefund_tv_totalreturn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/onefund_btn_deltrans"
+        android:text="test" />
+
 
     <ListView
         android:id="@+id/onefund_lv_translist"

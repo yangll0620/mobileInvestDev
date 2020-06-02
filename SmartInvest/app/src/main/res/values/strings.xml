@@ -10,7 +10,7 @@
     <string name="onefund_totalreturn">Total \nReturn</string>
     <string name="onefund_annualreturn">Annual Return Rate </string>
     <string name="onefund_peakannualreturn">Peak Annual Return Rate </string>
-    <string name="onefund_history">Transaction History</string>
+    <string name="onefund_history">Transactions</string>
     <string name="onefund_addtran">Add Transactions</string>
     <string name="onefund_deltran">Delete</string>
     <string name="onefund_updatetran">Update</string>

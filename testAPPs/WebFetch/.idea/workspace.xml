@@ -10,26 +10,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b312ca7d-8f43-4ec0-8fb4-4caeb62365cc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/UpdatePriceRunnable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/XIRR.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/res/menu/onefund.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../SmartInvest/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/AddTransActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/AddTransActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/AlphaVantageUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/AlphaVantageUse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/DBManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/Fund.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/Fund.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/OneFundDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/OneFundDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/OnefundTransListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/OnefundTransListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/java/com/example/smartinvest/UpdatePriceRunnable.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/res/layout/activity_one_fund_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/res/layout/activity_one_fund_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/res/layout/activity_onefund_trans_lv_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/res/layout/activity_onefund_trans_lv_item.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/res/menu/main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/res/menu/main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmartInvest/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmartInvest/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/bundle_manifest/debug/processDebugManifest/bundle-manifest/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/bundle_manifest/debug/processDebugManifest/bundle-manifest/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/instant_app_manifest/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/instant_app_manifest/debug/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/com/example/webfetch/FetchCurrentPrice.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/com/example/webfetch/FetchCurrentPrice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/com/example/webfetch/FetchCurrentPrice.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/com/example/webfetch/FetchCurrentPrice.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/webfetch/FetchCurrentPrice.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/webfetch/FetchCurrentPrice.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +42,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3a_emulator" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3a_API_29" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -52,19 +54,24 @@
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+          <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
               <caret line="6" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
-          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/webfetch/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
+            <state relative-caret-position="448">
+              <caret line="151" column="49" selection-start-line="151" selection-start-column="42" selection-end-line="151" selection-end-column="49" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2860#2861#0" expanded="true" />
+                <element signature="e#2906#2907#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,19 +90,19 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider editor-type-id="android-manifest" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="300">
               <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
             </state>
           </provider>
-          <provider editor-type-id="android-manifest" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/webfetch/FetchCurrentPrice.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="65" column="25" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="25" />
+            <state relative-caret-position="450">
+              <caret line="30" column="69" selection-start-line="30" selection-start-column="69" selection-end-line="30" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -129,19 +136,19 @@
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/webfetch/SearchableActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/search_menu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/webfetch/FetchCurrentPrice.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/webfetch/SearchedFundListViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/webfetch/FetchPriceRunnable.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/webfetch/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/webfetch/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/webfetch/FetchCurrentPrice.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="1555" />
-    <option name="y" value="-290" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="1440" />
+    <option name="y" value="-613" />
     <option name="width" value="1920" />
-    <option name="height" value="877" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -150,8 +157,8 @@
     </navigator>
     <panes>
       <pane id="ProjectPane" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -314,11 +321,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1555" y="-290" width="1920" height="877" extended-state="0" />
+    <frame x="1440" y="-613" width="1920" height="1057" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.13045794" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.1315229" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -329,14 +336,14 @@
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49570817" weight="0.09207921" />
       <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.4968051" weight="0.3280543" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49733758" weight="0.3280543" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.485623" weight="0.39253393" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.485623" visible="true" weight="0.31917098" />
       <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.4968051" weight="0.3280543" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.514377" side_tool="true" weight="0.39253393" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49785408" weight="0.32954547" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.48935038" visible="true" weight="0.25732484" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" sideWeight="0.49785408" weight="0.32954547" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.48935038" weight="0.25732484" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" sideWeight="0.49785408" weight="0.32954547" />
       <window_info anchor="bottom" id="Find" order="9" sideWeight="0.49944875" weight="0.32917964" />
-      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
+      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" weight="0.32960597" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
@@ -459,12 +466,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/webfetch/FetchPriceRunnable.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/webfetch/SearchedFundListViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -477,27 +484,32 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/webfetch/FetchCurrentPrice.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/webfetch/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="65" column="25" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="25" />
+        <state relative-caret-position="448">
+          <caret line="151" column="49" selection-start-line="151" selection-start-column="42" selection-end-line="151" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2860#2861#0" expanded="true" />
+            <element signature="e#2906#2907#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/webfetch/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/webfetch/FetchCurrentPrice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
+        <state relative-caret-position="450">
+          <caret line="30" column="69" selection-start-line="30" selection-start-column="69" selection-end-line="30" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

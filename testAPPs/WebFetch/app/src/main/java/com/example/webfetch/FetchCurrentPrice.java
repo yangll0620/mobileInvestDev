@@ -29,7 +29,6 @@ public class FetchCurrentPrice {
         try {
             URL url = new URL(URL);
             urlConnection = (HttpURLConnection) url.openConnection();
-
             int code = urlConnection.getResponseCode();
             if (code != 200) {
                 urlConnection = null;
