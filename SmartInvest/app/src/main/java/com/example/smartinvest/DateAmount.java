@@ -37,15 +37,14 @@ public class DateAmount implements Comparable<DateAmount>{
 
     private static float SumXIRRAmout(List<DateAmount> dateAmountList, double XIRR){
         float sumA;
-        long day2Ms = 24 * 60 * 60 * 1000;
+        long msPerDay = 24 * 60 * 60 * 1000; // milliseconds per day
 
         Date date_latest = dateAmountList.get(dateAmountList.size()-1).date;
 
         sumA = 0;
         for(int i=0; i< dateAmountList.size(); i++){
 
-            long diffMs = Math.abs(dateAmountList.get(i).date.getTime() - date_latest.getTime());
-            long diffDays = diffMs / (day2Ms);
+            long diffDays = (Math.abs(dateAmountList.get(i).date.getTime() - date_latest.getTime()))/msPerDay;
 
             sumA += dateAmountList.get(i).amount * Math.pow((1 + XIRR), diffDays/365.0);
         }
@@ -78,6 +77,11 @@ public class DateAmount implements Comparable<DateAmount>{
         int iteri = 1;
         sumA = SumXIRRAmout(dateAmountList, XIRR);
 
+        if(sumA <10)
+        {
+            lr = 0.001;
+        }
+
         // identify increase and decrease direction
         while(Math.abs(sumA) > epsilon & iteri < maxIterators){
             float sum1 = SumXIRRAmout(dateAmountList, XIRR - lr);
@@ -97,8 +101,16 @@ public class DateAmount implements Comparable<DateAmount>{
                     sumA = sum2;
                 }
             }
+
+            if(sumA <10)
+            {// decrease learning rate
+                lr = 0.001;
+            }
+
             iteri++;
         }
+
         return XIRR;
     }
+
 }

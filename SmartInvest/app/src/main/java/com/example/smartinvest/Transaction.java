@@ -3,6 +3,7 @@ package com.example.smartinvest;
 
 import java.util.Date;
 
+
 public class Transaction implements Comparable<Transaction> {
     private String transFundSymbol;
     private String transFundName;
@@ -100,10 +101,10 @@ public class Transaction implements Comparable<Transaction> {
     public int compareTo(Transaction trans) {
 
         if (trans.getTransDate().before(this.transDate)){
-            return 1;
+            return -1;
         }
         else if (trans.getTransDate().after(this.transDate)) {
-            return -1;
+            return 1;
         }
         else {
             return 0;

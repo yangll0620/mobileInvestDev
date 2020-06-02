@@ -1,7 +1,5 @@
 package com.example.smartinvest;
 
-import android.os.AsyncTask;
-import android.text.format.DateFormat;
 
 import androidx.annotation.StringDef;
 
@@ -19,11 +17,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class AlphaVantageUse
+public class AlphaVantageUse implements Runnable
 {
 
-    private static final String apiKey = "ICPJTYNNQ4EO66TT";
-    private static final String alphaVURL = "https://www.alphavantage.co/";
+    public static final String apiKey = "ICPJTYNNQ4EO66TT";
+    public static final String alphaVURL = "https://www.alphavantage.co/";
 
 
     public static final String inter1min = "1min";
@@ -36,14 +34,27 @@ public class AlphaVantageUse
 
 
 
+    /** Variables for Update Prices Runnable **/
+    int updateSec;
+    boolean updateTag;
+
+    String serialInterval;
+    Fund fundChecked;
+    float price;
+
+
+
     public AlphaVantageUse()
     {
 
     }
 
+
+    // Annotation replace enums, the the value of the annotated String element SerialInterval should be one of the explicitly named constants.
     @StringDef({inter1min, inter5min, inter15min, inter30min, inter60min})
     @Retention(RetentionPolicy.SOURCE)
     public @interface SerialInterval {}
+
 
 
     public JSONObject RetrieveOnlineJSON(String alphaVRequestString)
@@ -155,54 +166,40 @@ public class AlphaVantageUse
     }
 
 
-    public class UpdatePriceRunnable implements Runnable {
-        int updateSec;
-        boolean updateTag;
 
-        private @SerialInterval String serialInterval;
-        Fund fund;
-        float price;
+    /** methods for runnable **/
+    public void prepareUpdatePrice(Fund fundChecked, int updateSec)
+    {
+        this.fundChecked = fundChecked;
+        this.updateSec = updateSec;
+    }
 
-        UpdatePriceRunnable(int updateSec, @SerialInterval String serialInterval, Fund fund){
+    @Override
+    public void run(){
 
-            this.updateSec= updateSec;
-            this.serialInterval = serialInterval;
-        }
+        updateTag = true;
+        while(updateTag)
+        {/* update Stock price every updateIntervalSec */
 
-        void setFund(Fund fund){
-            this.fund = fund;
-        }
+            String timeSeriesAlphaVQuery = alphaVURL + "query?function=TIME_SERIES_INTRADAY&symbol=" + fundChecked.getFundSymbol() + "&interval=" + serialInterval + "&apikey=" + apiKey;
 
-        @Override
-        public void run(){
+            try{
+                JSONObject retrievedJSON = RetrieveOnlineJSON(timeSeriesAlphaVQuery);
+                price = ParsePriceTimeSeriesJSON(retrievedJSON, serialInterval);
+            }catch(Exception e)
+            {
+                e.printStackTrace();
+                price = faultPrice;
+            }
 
-            updateTag = true;
-            while(updateTag)
-            {/* update Stock price every updateIntervalSec */
-
-                String timeSeriesAlphaVQuery = alphaVURL + "query?function=TIME_SERIES_INTRADAY&symbol=" + fund.getFundSymbol() + "&interval=" + serialInterval + "&apikey=" + apiKey;
-
-                try{
-                    JSONObject retrievedJSON = RetrieveOnlineJSON(timeSeriesAlphaVQuery);
-                    price = ParsePriceTimeSeriesJSON(retrievedJSON, serialInterval);
-                }catch(Exception e)
-                {
-                    e.printStackTrace();
-                    price = faultPrice;
-                }
-
-                // Sleep updateSec seconds
-                try{
-                    Thread.sleep(updateSec * 1000);
-                }
-                catch(InterruptedException e){
-                    e.printStackTrace();
-                }
+            // Sleep updateSec seconds
+            try{
+                Thread.sleep(updateSec * 1000);
+            }
+            catch(InterruptedException e){
+                e.printStackTrace();
             }
         }
     }
-
-
-
 
 }

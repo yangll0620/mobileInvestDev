@@ -1,4 +1,4 @@
-#Fri Apr 03 11:56:46 CDT 2020
+#Tue Jun 02 09:52:18 CDT 2020
 base.0=/Users/linglingyang/Desktop/mobileInvestDev/testAPPs/WebFetch/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

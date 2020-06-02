@@ -22,6 +22,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String SAVEDFUNDS_ID = "_id";
     public static final String SAVEDFUNDS_FUNDSYMBOL = "fundSymbol";
     public static final String SAVEDFUNDS_FUNDNAME = "fundName";
+    public static final String SAVEDFUNDS_PEAKANN = "peakAnnualReturn";
+
 
 
     // columns for transcations Table
@@ -38,8 +40,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // table create query string
     private static final String CREATE_TABLE_SAVEDFUNDS = "create table " + TABLENAME_SAVEDFUNDS + "(" +
             SAVEDFUNDS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            SAVEDFUNDS_FUNDSYMBOL + " TEXT NOT NULL, " +
-            SAVEDFUNDS_FUNDNAME + " TEXT)";
+            SAVEDFUNDS_FUNDSYMBOL + " TEXT NOT NULL, " + SAVEDFUNDS_FUNDNAME + " TEXT, " +
+            SAVEDFUNDS_PEAKANN + " REAL)";
 
     private static final String CREATE_TABLE_TRANS = "create table " + TABLENAME_TRANS + "(" +
             TRANS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -63,6 +65,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+        db.execSQL("DROP TABLE IF EXISTS " + TABLENAME_SAVEDFUNDS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLENAME_TRANS);
+        onCreate(db);
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion){
         db.execSQL("DROP TABLE IF EXISTS " + TABLENAME_SAVEDFUNDS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLENAME_TRANS);
         onCreate(db);
