@@ -13,4 +13,7 @@ Contents:
    :glob:
 
 
+
+
+   aboutSmartInvest
    tableTransaction
