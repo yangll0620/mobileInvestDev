@@ -18,7 +18,7 @@ Main Layout
 
 The main layout of the Smart Invest app is as follows:
 
-.. image:: figures/mainLayout.PNG
+.. image:: figures/mainLayout.png
 
 
 One Fund Detail Layout
@@ -26,9 +26,9 @@ One Fund Detail Layout
 
 The details of one fund are presented as :
 
-.. image:: figures/fundDetailLayout.PNG
+.. image:: figures/fundDetailLayout.png
 
 
 And the add/modify transaction interface is designed as:
 
-.. image:: figures/transAddLayout.PNG
+.. image:: figures/transAddLayout.png
